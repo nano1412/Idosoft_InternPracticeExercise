@@ -2,12 +2,12 @@ import { useState } from 'react'
 
 // import './App.css'
 
-function MainPage() {
+function AddBill() {
   return(
     <>
-      <h1>Hello</h1>
+      <h1>Hello from add bill</h1>
     </>
   )
 }
 
-export default MainPage
+export default AddBill
