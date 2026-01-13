@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path = '/add' element = {<Addbill />}> </Route>
           <Route path = '/edit/:id' element = {<Editbill />}> </Route>
-          <Route path = '/manage' element = {<Managebill />}> </Route>
+          <Route path = '/' element = {<Managebill />}> </Route>
         </Routes>
       </BrowserRouter>
       
