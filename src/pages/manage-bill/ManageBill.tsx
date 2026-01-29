@@ -13,10 +13,8 @@ type Props = {
 };
 
 function ManageBill({ bills }: Props) {
-  const [showDeleteConfirmation, setDeleteConfirmation] = useState("");
+  // const [showDeleteConfirmation, setDeleteConfirmation] = useState("");
   const navigate = useNavigate();
-
-  console.log(showDeleteConfirmation)
 
   return(
     <>
@@ -82,11 +80,11 @@ function ManageBill({ bills }: Props) {
       />
     </div>
 
-    {showDeleteConfirmation != "" &&(
+    {/* {showDeleteConfirmation != "" &&(
       <ConfirmationModal onClose = {() => {setDeleteConfirmation("")}} onConfirm = {() => {console.log(`delete ${showDeleteConfirmation}`)}}>
         <p>are you sure you want to delete bill {showDeleteConfirmation}</p>
       </ConfirmationModal>
-    )}
+    )} */}
       </Container>
     </div>
     </>
