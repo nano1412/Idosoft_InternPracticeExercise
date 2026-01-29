@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { useParams } from 'react-router'
+import type { Bill } from '../components/types';
 
-// import './App.css'
+type Props = {
+  bills:Bill[];
+  editBills: any;
+};
 
-function EditBill() {
+function EditBill({bills, editBills}:Props) {
+  const bill = bills
   const { id } = useParams()
 
   return(
