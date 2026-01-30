@@ -52,19 +52,19 @@ function AddBill({ setBills }: Props) {
         <div className="[&>*:not(:last-child)]:mr-5">
           <ButtonComponent
             AdditionalClass="text-white bg-red-500 hover:bg-red-600"
-            children="cancel"
             onClick={() => {
               navigate("/");
             }}
-          />
+          >cancel
+          </ButtonComponent>
 
           <ButtonComponent
             AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
-            children="Add bill"
             onClick={() => {}}
             type="submit"
             form="add-bill-form"
-          />
+          >Add bill
+          </ButtonComponent>
         </div>
 
         {showError && (

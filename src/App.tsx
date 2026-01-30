@@ -13,7 +13,7 @@ const defaultBills = [{
         shopName: "lazada",
         description: "abc",
         amount: "30",
-        date: "5/7/2029",
+        date: "2026-01-19",
         category: BillCategory.TRANSPORT,
         note: "งง",
       },{
@@ -21,7 +21,7 @@ const defaultBills = [{
         shopName: "shopee",
         description: "def",
         amount: "25",
-        date: "20/8/2030",
+        date: "2026-05-19",
         category: BillCategory.UTILITIES,
         note: "-",
       },
@@ -38,8 +38,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path = '/add' element = {<Addbill setBills = {setBills}/>}> </Route>
-            <Route path = '/edit/:id' element = {<Editbill bills = {bills} editBills = {setBills}/>}> </Route>
-            <Route path = '/' element = {<Managebill bills = {bills}/>}> </Route>
+            <Route path = '/edit/:id' element = {<Editbill bills = {bills} setBills = {setBills}/>}> </Route>
+            <Route path = '/' element = {<Managebill bills = {bills} setBills = {setBills}/>}> </Route>
           </Routes>
         </BrowserRouter> 
       </div>
