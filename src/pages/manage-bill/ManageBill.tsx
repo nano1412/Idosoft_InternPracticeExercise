@@ -2,7 +2,6 @@ import Container from "@/pages/components/Container";
 import { useNavigate } from "react-router";
 
 import Button from "@/pages/components/ButtonComponent";
-import { BillCategory } from "@/pages/components/types";
 import type { Bill } from "@/pages/components/types";
 import { useState } from "react";
 import ConfirmationModal from "../components/ConfirmationModal";

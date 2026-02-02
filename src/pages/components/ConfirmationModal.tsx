@@ -1,4 +1,3 @@
-import { useState, type ReactNode } from "react";
 import ButtonComponent from "./ButtonComponent";
 
 type PopupProps = {

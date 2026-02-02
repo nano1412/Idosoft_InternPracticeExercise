@@ -6,7 +6,6 @@ import type { Bill } from "@/pages/components/types";
 import FormContent, { getFormValidationMessage, getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/pages/components/FormContent";
 import Container from "@/pages/components/Container";
 import ButtonComponent from "../components/ButtonComponent";
-import Modal from "../components/modal";
 
 
 type Props = {
@@ -15,8 +14,6 @@ type Props = {
 
 function AddBill({ setBills }: Props) {
   const navigate = useNavigate();
-  const [showError, setShowError] = useState(false);
-  const [errorText, setErrorText] = useState("");
   const [errorField, setErrorField] = useState<BillFormValidation>({isShopNameValid: true,
   isDescriptionValid: true,
   isAmountValid: true,
@@ -43,8 +40,6 @@ function AddBill({ setBills }: Props) {
     navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
-      setErrorText(getFormValidationMessage(formData));
-      setShowError(true);
     }
   };
 
@@ -71,14 +66,6 @@ function AddBill({ setBills }: Props) {
           >Add bill
           </ButtonComponent>
         </div>
-
-        {/* {showError && (
-          <Modal onClose={() => setShowError(false)}>
-            <pre>
-              {errorText}
-              </pre>
-          </Modal>
-)} */}
       </Container>
     </div>
   );

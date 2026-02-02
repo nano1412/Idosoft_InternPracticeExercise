@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import type { Bill } from "../components/types";
 import Container from "../components/Container";
-import FormContent, { getFormValidationMessage, getMissingFieldsValidation, isFormValid, type BillFormValidation } from "../components/FormContent";
+import FormContent, { getMissingFieldsValidation, isFormValid, type BillFormValidation } from "../components/FormContent";
 import ButtonComponent from "../components/ButtonComponent";
-import Modal from "../components/modal";
 
 type Props = {
   bills: Bill[];
@@ -14,8 +13,6 @@ type Props = {
 function EditBill({ bills, setBills }: Props) {
   console.log(bills)
   const navigate = useNavigate();
-  const [showError, setShowError] = useState(false);
-  const [errorText, setErrorText] = useState("");
     const [errorField, setErrorField] = useState<BillFormValidation>({isShopNameValid: true,
     isDescriptionValid: true,
     isAmountValid: true,
@@ -51,8 +48,6 @@ function EditBill({ bills, setBills }: Props) {
       navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
-      setErrorText(getFormValidationMessage(formData));
-      setShowError(true);
     }
   };
 
@@ -79,12 +74,6 @@ function EditBill({ bills, setBills }: Props) {
               Edit bill: {id}
             </ButtonComponent>
           </div>
-
-          {/* {showError && (
-            <Modal onClose={() => setShowError(false)}>
-              <pre>{errorText}</pre>
-            </Modal>
-          )} */}
         </Container>
       </div>
     </>

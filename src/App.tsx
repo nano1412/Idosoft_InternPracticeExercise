@@ -1,32 +1,12 @@
 import { useState } from "react";
 import type { Bill } from "@/pages/components/types"
-import { BillCategory } from "@/pages/components/types";
-import {BrowserRouter, Route, Router, Routes } from 'react-router'
+import {BrowserRouter, Route, Routes } from 'react-router'
 
 import './App.css'
 import Addbill from './pages/add-bill/AddBill.tsx'
 import Editbill from './pages/edit-bill/EditBill.tsx'
 import Managebill from './pages/manage-bill/ManageBill.tsx'
 import Header from "./pages/header/Header.tsx";
-
-const defaultBills = [{
-        billId: "1",
-        shopName: "lazada",
-        description: "abc",
-        amount: "30",
-        date: "2026-01-19",
-        category: BillCategory.TRANSPORT,
-        note: "งง",
-      },{
-        billId: "2",
-        shopName: "shopee",
-        description: "def",
-        amount: "25",
-        date: "2026-05-19",
-        category: BillCategory.UTILITIES,
-        note: "-",
-      },
-    ]
 
 function App() {
   const [bills, setBills] = useState<Bill[]>([]);
