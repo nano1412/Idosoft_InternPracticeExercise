@@ -31,7 +31,10 @@ function ManageBill({ bills, setBills }: Props) {
       <div className="text-center">
         <Container>
           <div>
-            <table className="min-w-full divide-y divide-black">
+            {bills.length === 0?
+            <p>there is no bill here, please add a new one</p>
+             : 
+             <table className="min-w-full divide-y divide-black">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden md:table-cell">
@@ -102,7 +105,8 @@ function ManageBill({ bills, setBills }: Props) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>}
+            
 
             <Button
               AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"

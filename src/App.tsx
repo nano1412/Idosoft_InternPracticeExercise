@@ -28,9 +28,8 @@ const defaultBills = [{
       },
     ]
 
-
 function App() {
-  const [bills, setBills] = useState<Bill[]>(defaultBills);
+  const [bills, setBills] = useState<Bill[]>([]);
 
   return (
     <>
