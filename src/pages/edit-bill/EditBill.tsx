@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import type { Bill } from "../components/types";
 import Container from "../components/Container";
-import FormContent from "../components/FormContent";
+import FormContent, { getFormValidationMessage, getMissingFieldsValidation, isFormValid, type BillFormValidation } from "../components/FormContent";
 import ButtonComponent from "../components/ButtonComponent";
 import Modal from "../components/modal";
-import { CheckMissingField, isFormValid } from "../components/FormValidation";
 
 type Props = {
   bills: Bill[];
@@ -13,9 +12,16 @@ type Props = {
 };
 
 function EditBill({ bills, setBills }: Props) {
+  console.log(bills)
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
   const [errorText, setErrorText] = useState("");
+    const [errorField, setErrorField] = useState<BillFormValidation>({isShopNameValid: true,
+    isDescriptionValid: true,
+    isAmountValid: true,
+    isDateValid: true,
+    isCategoryValid: true
+  });
 
   const { id } = useParams();
   
@@ -24,7 +30,6 @@ function EditBill({ bills, setBills }: Props) {
   }
   const editBillTarget = GetEditTargetBill(id);
 
-  // this is still add bill
   const handleEditBill = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -45,7 +50,8 @@ function EditBill({ bills, setBills }: Props) {
     ));
       navigate("/");
     } else {
-      setErrorText(CheckMissingField(formData));
+      setErrorField(getMissingFieldsValidation(formData));
+      setErrorText(getFormValidationMessage(formData));
       setShowError(true);
     }
   };
@@ -54,13 +60,11 @@ function EditBill({ bills, setBills }: Props) {
     <>
       <div className="px-15 lg:px-30">
         <Container>
-          <form id="add-bill-form" onSubmit={handleEditBill}>
-            <FormContent {...editBillTarget} />
-          </form>
+            <FormContent {...errorField} {...editBillTarget} handleOnSubmit = {handleEditBill} id ={"edit-bill-form"} />
 
-          <div className="[&>*:not(:last-child)]:mr-5">
+          <div className="flex sm:max-w-100">
             <ButtonComponent
-              AdditionalClass="text-white bg-red-500 hover:bg-red-600"
+              AdditionalClass="text-white bg-red-500 hover:bg-red-600 mr-5 mb-5 sm:mb-0"
               onClick={() => {
                 navigate("/");
               }}>
@@ -71,16 +75,16 @@ function EditBill({ bills, setBills }: Props) {
               AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
               onClick={() => {}}
               type="submit"
-              form="add-bill-form">
+              form="edit-bill-form">
               Edit bill: {id}
             </ButtonComponent>
           </div>
 
-          {showError && (
+          {/* {showError && (
             <Modal onClose={() => setShowError(false)}>
               <pre>{errorText}</pre>
             </Modal>
-          )}
+          )} */}
         </Container>
       </div>
     </>

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
 import type { Bill } from "@/pages/components/types";
-import { CheckMissingField, isFormValid } from "../components/FormValidation";
 
-import FormContent from "@/pages/components/FormContent";
+import FormContent, { getFormValidationMessage, getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/pages/components/FormContent";
 import Container from "@/pages/components/Container";
 import ButtonComponent from "../components/ButtonComponent";
 import Modal from "../components/modal";
@@ -18,6 +17,12 @@ function AddBill({ setBills }: Props) {
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
   const [errorText, setErrorText] = useState("");
+  const [errorField, setErrorField] = useState<BillFormValidation>({isShopNameValid: true,
+  isDescriptionValid: true,
+  isAmountValid: true,
+  isDateValid: true,
+  isCategoryValid: true
+});
 
   const handleAddBill = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +30,7 @@ function AddBill({ setBills }: Props) {
     const formData = new FormData(e.currentTarget);
     if(isFormValid(formData)){
       const bill: Bill = {
-      billId: Date.now(),
+      billId: Date.now().toString(),
       shopName: formData.get("shopName") as string,
       description: formData.get("description") as string,
       amount: formData.get("amount") as string,
@@ -37,21 +42,21 @@ function AddBill({ setBills }: Props) {
     setBills((prev: Bill[]) => [...prev, bill]);
     navigate("/");
     } else {
-      setErrorText(CheckMissingField(formData))
+      setErrorField(getMissingFieldsValidation(formData));
+      setErrorText(getFormValidationMessage(formData));
       setShowError(true);
     }
   };
 
   return (
-    <div className="px-15 lg:px-30">
+    <div className="px-15 lg:px-30 ">
       <Container>
-        <form id="add-bill-form" onSubmit={handleAddBill}>
-          <FormContent />
-        </form>
 
-        <div className="[&>*:not(:last-child)]:mr-5">
+          <FormContent {...errorField} handleOnSubmit = {handleAddBill} id = {"add-bill-form"}/>
+
+        <div className="flex sm:max-w-100">
           <ButtonComponent
-            AdditionalClass="text-white bg-red-500 hover:bg-red-600"
+            AdditionalClass="text-white bg-red-500 hover:bg-red-600 mr-5 mb-5 sm:mb-0"
             onClick={() => {
               navigate("/");
             }}
@@ -67,13 +72,13 @@ function AddBill({ setBills }: Props) {
           </ButtonComponent>
         </div>
 
-        {showError && (
+        {/* {showError && (
           <Modal onClose={() => setShowError(false)}>
             <pre>
               {errorText}
               </pre>
           </Modal>
-)}
+)} */}
       </Container>
     </div>
   );

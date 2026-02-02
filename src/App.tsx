@@ -7,6 +7,7 @@ import './App.css'
 import Addbill from './pages/add-bill/AddBill.tsx'
 import Editbill from './pages/edit-bill/EditBill.tsx'
 import Managebill from './pages/manage-bill/ManageBill.tsx'
+import Header from "./pages/header/Header.tsx";
 
 const defaultBills = [{
         billId: "1",
@@ -33,16 +34,17 @@ function App() {
 
   return (
     <>
-    <div className="min-h-screen bg-blue-200">
-      <div className='py-8 px-12'>
+    <div className="min-h-screen bg-gray-50">
         <BrowserRouter>
+      <Header/>
+      <div className='py-8 px-12'>
           <Routes>
             <Route path = '/add' element = {<Addbill setBills = {setBills}/>}> </Route>
             <Route path = '/edit/:id' element = {<Editbill bills = {bills} setBills = {setBills}/>}> </Route>
             <Route path = '/' element = {<Managebill bills = {bills} setBills = {setBills}/>}> </Route>
           </Routes>
-        </BrowserRouter> 
       </div>
+        </BrowserRouter> 
     </div>
       
     </>
