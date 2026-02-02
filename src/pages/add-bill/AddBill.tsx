@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 import type { Bill } from "@/pages/components/types";
 
-import FormContent, { getFormValidationMessage, getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/pages/components/FormContent";
+import FormContent, { getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/pages/components/FormContent";
 import Container from "@/pages/components/Container";
 import ButtonComponent from "../components/ButtonComponent";
 
