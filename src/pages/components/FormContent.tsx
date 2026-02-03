@@ -178,20 +178,6 @@ export const isFormValid = (form: FormData): boolean => {
   });
 };
 
-export const getFormValidationMessage = (form: FormData): string => {
-  let text = "Please enter all the following field(s):\n";
-
-  Object.entries(fieldMap).forEach(([field, label]) => {
-    const value = form.get(field);
-
-    if (!isNonEmptyString(value as string)) {
-      text += `- ${label}\n`;
-    }
-  });
-
-  return text;
-};
-
 export const getMissingFieldsValidation = (
   form: FormData,
 ): BillFormValidation => {
