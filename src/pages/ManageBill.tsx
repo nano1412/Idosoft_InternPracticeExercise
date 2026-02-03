@@ -6,23 +6,16 @@ import type { Bill } from "@/components/types";
 import Button from "@/components/ButtonComponent";
 import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import { useBillStore } from "@/store";
 
-type Props = {
-  bills: Bill[];
-  setBills: React.Dispatch<React.SetStateAction<Bill[]>>;
-};
 
-const ManageBill: React.FC<Props> = ({ bills, setBills }) => {
+const ManageBill = () => {
+  const bills = useBillStore((state) => state.bills)
+  const removeBill = useBillStore((state) => state.deleteBill)
+
   const [isModalOpen, setDeleteConfirmationModalOpen] = useState(false);
   const [billIdToModify, setBillIdToModify] = useState("");
   const navigate = useNavigate();
-
-  const deleteContent = (idToDelete: string):void => {
-    setBills((prevBills: Bill[]) =>
-      prevBills.filter((bill) => bill.billId !== idToDelete),
-    );
-    setDeleteConfirmationModalOpen(false);
-  };
 
   return (
     <>
@@ -123,7 +116,7 @@ const ManageBill: React.FC<Props> = ({ bills, setBills }) => {
           {isModalOpen && (
             <ConfirmationModal
               onClose={() => setDeleteConfirmationModalOpen(false)}
-              onConfirm={() => deleteContent(billIdToModify)}
+              onConfirm={() => {removeBill(billIdToModify);setDeleteConfirmationModalOpen(false)}}
             >
               <p>are you sure you want to delete bill {billIdToModify}</p>
             </ConfirmationModal>

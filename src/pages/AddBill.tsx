@@ -11,12 +11,12 @@ import {
   isFormValid,
   type BillFormValidation,
 } from "@/components/FormValidation";
+import { useBillStore } from "@/store";
 
-type Props = {
-  setBills: React.Dispatch<React.SetStateAction<Bill[]>>;
-};
 
-function AddBill({ setBills }: Props) {
+const AddBill = () => {
+  const addBill = useBillStore((state) => state.createBill)
+  
   const navigate = useNavigate();
   const [errorField, setErrorField] = useState<BillFormValidation>({
     isShopNameValid: true,
@@ -41,7 +41,7 @@ function AddBill({ setBills }: Props) {
         note: formData.get("note") as string,
       };
 
-      setBills((prev: Bill[]) => [...prev, bill]);
+      addBill(bill);
       navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
@@ -51,6 +51,7 @@ function AddBill({ setBills }: Props) {
   return (
     <div className="px-15 lg:px-30 ">
       <Container>
+        
         <FormContent
           {...errorField}
           handleOnSubmit={handleAddBill}

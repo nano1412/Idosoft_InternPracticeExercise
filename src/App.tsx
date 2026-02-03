@@ -9,7 +9,6 @@ import ManageBill from "@/pages/ManageBill.tsx";
 import Header from "@/pages/Header.tsx";
 
 function App() {
-  const [bills, setBills] = useState<Bill[]>([]);
 
   return (
     <>
@@ -18,14 +17,14 @@ function App() {
           <Header />
           <div className="py-8 px-12">
             <Routes>
-              <Route path="/add" element={<AddBill setBills={setBills} />} />
+              <Route path="/add" element={<AddBill/>} />
               <Route
                 path="/edit/:id"
-                element={<EditBill bills={bills} setBills={setBills} />}
+                element={<EditBill/>}
               />
               <Route
                 path="/"
-                element={<ManageBill bills={bills} setBills={setBills} />}
+                element={<ManageBill/>}
               />
             </Routes>
           </div>
