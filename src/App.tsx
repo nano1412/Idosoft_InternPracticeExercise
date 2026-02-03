@@ -1,7 +1,4 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-
-import type { Bill } from "@/components/types";
 
 import AddBill from "@/pages/AddBill.tsx";
 import EditBill from "@/pages/EditBill.tsx";
