@@ -53,6 +53,7 @@ const EditBill = () => {
     <>
       <div className="px-15 lg:px-30">
         <Container>
+          <h1 className="font-bold text-3xl">Edit Bill ID: {id}</h1>
           <FormContent
             {...errorField}
             {...editBillTarget}
@@ -76,7 +77,7 @@ const EditBill = () => {
               type="submit"
               form="edit-bill-form"
             >
-              Edit bill: {id}
+              Confirm editing
             </ButtonComponent>
           </div>
         </Container>

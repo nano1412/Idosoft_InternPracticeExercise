@@ -51,7 +51,7 @@ const AddBill = () => {
   return (
     <div className="px-15 lg:px-30 ">
       <Container>
-        
+        <h1 className="font-bold text-3xl">Add New Bill</h1>
         <FormContent
           {...errorField}
           handleOnSubmit={handleAddBill}

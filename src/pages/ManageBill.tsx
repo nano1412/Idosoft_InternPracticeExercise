@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
-import type { Bill } from "@/components/types";
-
 import Button from "@/components/ButtonComponent";
 import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
@@ -19,9 +17,10 @@ const ManageBill = () => {
 
   return (
     <>
-      <div className="text-center">
+      <div>
         <Container>
-          <div>
+          <h1 className="font-bold text-3xl">Manage Bill</h1>
+          <div className="text-center mt-5">
             {bills.length === 0 ? (
               <p>there is no bill here, please add a new one</p>
             ) : (
