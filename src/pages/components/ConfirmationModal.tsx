@@ -16,15 +16,13 @@ function ConfirmationModal({ onClose, onConfirm, children }: PopupProps) {
     <div className="[&>*:not(:last-child)]:mr-5">
           <ButtonComponent
             AdditionalClass="bg-blue-600 text-white"
-            children="Cancel"
             onClick={onClose}
-            />
+            >Cancel</ButtonComponent>
 
           <ButtonComponent
             AdditionalClass="bg-red-600 text-white"
-            children="Confirm"
             onClick={onConfirm}
-            />
+            >Confirm</ButtonComponent>
         </div>
       </div>
     </div>
