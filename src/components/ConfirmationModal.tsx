@@ -1,4 +1,4 @@
-import ButtonComponent from "@/pages/components/ButtonComponent";
+import ButtonComponent from "@/components/ButtonComponent";
 
 type PopupProps = {
   onClose: () => void;

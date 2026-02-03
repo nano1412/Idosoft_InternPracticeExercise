@@ -1,4 +1,4 @@
-import { BillCategory, type Bill } from "@/pages/components/types";
+import { BillCategory, type Bill } from "@/components/types";
 import type React from "react";
 import type { FormHTMLAttributes } from "react";
 import type { BillFormValidation } from "./FormValidation";

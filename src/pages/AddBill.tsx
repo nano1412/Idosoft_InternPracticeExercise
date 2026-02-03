@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
-import type { Bill } from "@/pages/components/types";
+import type { Bill } from "@/components/types";
 
-import FormContent from "@/pages/components/FormContent";
-import Container from "@/pages/components/Container";
-import ButtonComponent from "@/pages/components/ButtonComponent";
+import FormContent from "@/components/FormContent";
+import Container from "@/components/Container";
+import ButtonComponent from "@/components/ButtonComponent";
 import {
   getMissingFieldsValidation,
   isFormValid,
   type BillFormValidation,
-} from "./components/FormValidation";
+} from "@/components/FormValidation";
 
 type Props = {
   setBills: React.Dispatch<React.SetStateAction<Bill[]>>;

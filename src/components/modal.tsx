@@ -1,5 +1,5 @@
 import React, { type ReactNode } from "react";
-import ButtonComponent from "@/pages/components/ButtonComponent";
+import ButtonComponent from "@/components/ButtonComponent";
 
 type ModalProps = {
   onClose: () => void;

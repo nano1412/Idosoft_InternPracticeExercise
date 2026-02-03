@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import type { Bill } from "@/pages/components/types";
-import Container from "@/pages/components/Container";
-import FormContent from "@/pages/components/FormContent";
-import ButtonComponent from "@/pages/components/ButtonComponent";
-import { getMissingFieldsValidation, isFormValid, type BillFormValidation } from "./components/FormValidation";
+import type { Bill } from "@/components/types";
+import Container from "@/components/Container";
+import FormContent from "@/components/FormContent";
+import ButtonComponent from "@/components/ButtonComponent";
+import { getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/components/FormValidation";
 
 type Props = {
   bills: Bill[];
