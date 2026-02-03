@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import type { Bill } from "@/pages/components/types";
 
-import AddBill from "./pages/add-bill/AddBill.tsx";
-import EditBill from "./pages/edit-bill/EditBill.tsx";
-import ManageBill from "./pages/manage-bill/ManageBill.tsx";
-import Header from "./pages/header/Header.tsx";
+import AddBill from "@/pages/AddBill.tsx";
+import EditBill from "@/pages/EditBill.tsx";
+import ManageBill from "@/pages/ManageBill.tsx";
+import Header from "@/pages/Header.tsx";
 
 function App() {
   const [bills, setBills] = useState<Bill[]>([]);
