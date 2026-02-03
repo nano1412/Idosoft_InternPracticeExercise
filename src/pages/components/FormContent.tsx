@@ -1,14 +1,7 @@
 import { BillCategory, type Bill } from "@/pages/components/types";
 import type React from "react";
 import type { FormHTMLAttributes } from "react";
-
-export type BillFormValidation = {
-  isShopNameValid: boolean;
-  isDescriptionValid: boolean;
-  isAmountValid: boolean;
-  isDateValid: boolean;
-  isCategoryValid: boolean;
-};
+import type { BillFormValidation } from "./FormValidation";
 
 type FormContentProps = Partial<Bill> &
   Partial<BillFormValidation> & {
@@ -162,34 +155,3 @@ const FormContent: React.FC<FormContentProps> = ({
 };
 
 export default FormContent;
-
-export const fieldMap: Record<string, string> = {
-  shopName: "Shop Name",
-  description: "Description",
-  category: "Category",
-  amount: "Amount",
-  date: "Date",
-};
-
-export const isFormValid = (form: FormData): boolean => {
-  return Object.keys(fieldMap).every((field) => {
-    const value = form.get(field);
-    return typeof value === "string" && value.trim().length > 0;
-  });
-};
-
-export const getMissingFieldsValidation = (
-  form: FormData,
-): BillFormValidation => {
-  return {
-    isShopNameValid: isNonEmptyString(form.get("shopName") as string),
-    isDescriptionValid: isNonEmptyString(form.get("description") as string),
-    isAmountValid: isNonEmptyString(form.get("amount") as string),
-    isDateValid: isNonEmptyString(form.get("date") as string),
-    isCategoryValid: isNonEmptyString(form.get("category") as string),
-  };
-};
-
-const isNonEmptyString = (value: string): boolean => {
-  return typeof value === "string" && value.trim() !== "";
-};
