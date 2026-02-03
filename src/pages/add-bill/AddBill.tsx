@@ -3,41 +3,45 @@ import { useNavigate } from "react-router";
 
 import type { Bill } from "@/pages/components/types";
 
-import FormContent, { getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/pages/components/FormContent";
+import FormContent, {
+  getMissingFieldsValidation,
+  isFormValid,
+  type BillFormValidation,
+} from "@/pages/components/FormContent";
 import Container from "@/pages/components/Container";
 import ButtonComponent from "@/pages/components/ButtonComponent";
 
-
 type Props = {
-  setBills: any;
+  setBills: React.Dispatch<React.SetStateAction<Bill[]>>;
 };
 
 function AddBill({ setBills }: Props) {
   const navigate = useNavigate();
-  const [errorField, setErrorField] = useState<BillFormValidation>({isShopNameValid: true,
-  isDescriptionValid: true,
-  isAmountValid: true,
-  isDateValid: true,
-  isCategoryValid: true
-});
+  const [errorField, setErrorField] = useState<BillFormValidation>({
+    isShopNameValid: true,
+    isDescriptionValid: true,
+    isAmountValid: true,
+    isDateValid: true,
+    isCategoryValid: true,
+  });
 
   const handleAddBill = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    const formData = new FormData(e.currentTarget);
-    if(isFormValid(formData)){
-      const bill: Bill = {
-      billId: Date.now().toString(),
-      shopName: formData.get("shopName") as string,
-      description: formData.get("description") as string,
-      amount: formData.get("amount") as string,
-      date: formData.get("date") as string,
-      category: formData.get("category") as string,
-      note: formData.get("note") as string,
-    };
 
-    setBills((prev: Bill[]) => [...prev, bill]);
-    navigate("/");
+    const formData = new FormData(e.currentTarget);
+    if (isFormValid(formData)) {
+      const bill: Bill = {
+        billId: Date.now().toString(),
+        shopName: formData.get("shopName") as string,
+        description: formData.get("description") as string,
+        amount: formData.get("amount") as string,
+        date: formData.get("date") as string,
+        category: formData.get("category") as string,
+        note: formData.get("note") as string,
+      };
+
+      setBills((prev: Bill[]) => [...prev, bill]);
+      navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
     }
@@ -46,8 +50,11 @@ function AddBill({ setBills }: Props) {
   return (
     <div className="px-15 lg:px-30 ">
       <Container>
-
-          <FormContent {...errorField} handleOnSubmit = {handleAddBill} id = {"add-bill-form"}/>
+        <FormContent
+          {...errorField}
+          handleOnSubmit={handleAddBill}
+          id={"add-bill-form"}
+        />
 
         <div className="flex sm:max-w-100">
           <ButtonComponent
@@ -55,7 +62,8 @@ function AddBill({ setBills }: Props) {
             onClick={() => {
               navigate("/");
             }}
-          >cancel
+          >
+            cancel
           </ButtonComponent>
 
           <ButtonComponent
@@ -63,7 +71,8 @@ function AddBill({ setBills }: Props) {
             onClick={() => {}}
             type="submit"
             form="add-bill-form"
-          >Add bill
+          >
+            Add bill
           </ButtonComponent>
         </div>
       </Container>
