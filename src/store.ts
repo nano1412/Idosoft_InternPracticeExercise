@@ -25,6 +25,6 @@ export const useBillStore = create<BillStore>((set) => ({
 
   deleteBill: (billId) =>
     set((state) => ({
-      bills: state.bills.filter((b) => b.billId !== billId),
+      bills: state.bills.filter((bill) => bill.billId !== billId),
     })),
 }));
