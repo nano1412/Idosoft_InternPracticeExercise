@@ -1,10 +1,11 @@
-import Container from "@/pages/components/Container";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+
+import type { Bill } from "@/pages/components/types";
 
 import Button from "@/pages/components/ButtonComponent";
-import type { Bill } from "@/pages/components/types";
-import { useState } from "react";
-import ConfirmationModal from "../components/ConfirmationModal";
+import Container from "@/pages/components/Container";
+import ConfirmationModal from "@/pages/components/ConfirmationModal";
 
 type Props = {
   bills: Bill[];
