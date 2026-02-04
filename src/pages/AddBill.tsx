@@ -58,7 +58,7 @@ const AddBill = () => {
           id={"add-bill-form"}
         />
 
-        <div className="flex justify-end gap-5 mx-9">
+        <div className="flex justify-start gap-5 mx-9">
           <ButtonComponent
             AdditionalClass="text-white bg-red-500 hover:bg-red-600"
             onClick={() => {
