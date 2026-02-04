@@ -34,7 +34,7 @@ const ManageBill = () => {
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden md:table-cell">
                       Description
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden sm:table-cell">
                       Amount
                     </th>
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
@@ -59,7 +59,7 @@ const ManageBill = () => {
                       <td className="max-w-1 whitespace-normal wrap-break-word hidden md:table-cell">
                         {bill.description}
                       </td>
-                      <td>{bill.amount}</td>
+                      <td className="hidden sm:table-cell">{bill.amount}</td>
                       <td className="min-w-20">{bill.date}</td>
                       <td className="min-w-20">{bill.category}</td>
                       <td className="max-w-1 whitespace-normal wrap-break-word hidden lg:table-cell">
