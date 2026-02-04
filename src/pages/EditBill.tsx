@@ -68,14 +68,14 @@ const EditBill = () => {
             id={"edit-bill-form"}
           />
 
-          <div className="flex justify-start gap-5 mx-9">
+          <div className="flex justify-center gap-5 mx-9">
             <ButtonComponent
               AdditionalClass="text-white bg-red-500 hover:bg-red-600"
               onClick={() => {
                 navigate("/");
               }}
             >
-              cancel
+              Cancel
             </ButtonComponent>
 
             <ButtonComponent
@@ -84,7 +84,7 @@ const EditBill = () => {
                 setEditingConfirmationModalOpen(true);
               }}
             >
-              Confirm editing
+              Save
             </ButtonComponent>
           </div>
         </Container>
