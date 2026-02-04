@@ -6,10 +6,9 @@ import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { useBillStore } from "@/store";
 
-
 const ManageBill = () => {
-  const bills = useBillStore((state) => state.bills)
-  const removeBill = useBillStore((state) => state.deleteBill)
+  const bills = useBillStore((state) => state.bills);
+  const removeBill = useBillStore((state) => state.deleteBill);
 
   const [isModalOpen, setDeleteConfirmationModalOpen] = useState(false);
   const [billIdToModify, setBillIdToModify] = useState("");
@@ -39,7 +38,7 @@ const ManageBill = () => {
                       Amount
                     </th>
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
-                      Date
+                      Purchase Date
                     </th>
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
                       Category
@@ -109,14 +108,17 @@ const ManageBill = () => {
             />
           </div>
         </Container>
-          {isModalOpen && (
-            <ConfirmationModal
-              onClose={() => setDeleteConfirmationModalOpen(false)}
-              onConfirm={() => {removeBill(billIdToModify);setDeleteConfirmationModalOpen(false)}}
-            >
-              <p>are you sure you want to delete bill {billIdToModify}</p>
-            </ConfirmationModal>
-          )}
+        {isModalOpen && (
+          <ConfirmationModal
+            onClose={() => setDeleteConfirmationModalOpen(false)}
+            onConfirm={() => {
+              removeBill(billIdToModify);
+              setDeleteConfirmationModalOpen(false);
+            }}
+          >
+            <p>are you sure you want to delete bill {billIdToModify}</p>
+          </ConfirmationModal>
+        )}
       </div>
     </>
   );

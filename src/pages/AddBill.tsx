@@ -58,9 +58,9 @@ const AddBill = () => {
           id={"add-bill-form"}
         />
 
-        <div className="flex sm:max-w-100">
+        <div className="flex justify-end gap-5 mx-9">
           <ButtonComponent
-            AdditionalClass="text-white bg-red-500 hover:bg-red-600 mr-5 mb-5 sm:mb-0"
+            AdditionalClass="text-white bg-red-500 hover:bg-red-600"
             onClick={() => {
               navigate("/");
             }}

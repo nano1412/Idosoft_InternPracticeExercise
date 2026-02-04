@@ -4,12 +4,18 @@ import type { Bill } from "@/components/types";
 import Container from "@/components/Container";
 import FormContent from "@/components/FormContent";
 import ButtonComponent from "@/components/ButtonComponent";
-import { getMissingFieldsValidation, isFormValid, type BillFormValidation } from "@/components/FormValidation";
+import {
+  getMissingFieldsValidation,
+  isFormValid,
+  type BillFormValidation,
+} from "@/components/FormValidation";
 import { useBillStore } from "@/store";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 const EditBill = () => {
-  const bills = useBillStore((state) => state.bills)
-  const editBill = useBillStore((state) => state.updateBill)
+  const bills = useBillStore((state) => state.bills);
+  const editBill = useBillStore((state) => state.updateBill);
+  const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const [errorField, setErrorField] = useState<BillFormValidation>({
@@ -22,14 +28,15 @@ const EditBill = () => {
 
   const { id } = useParams();
 
-  const GetEditTargetBill = (id: string):Bill | undefined => {
+  const GetEditTargetBill = (id: string): Bill | undefined => {
     return bills.find((bill) => bill.billId === id);
   };
   const editBillTarget = GetEditTargetBill(id as string);
 
-  const handleEditBill = (e: React.FormEvent<HTMLFormElement>):void => {
+  const handleEditBill = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
+    console.log("editing bill");
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const updateBill: Bill = {
@@ -42,7 +49,7 @@ const EditBill = () => {
         note: formData.get("note") as string,
       };
 
-      editBill(id as string,updateBill)
+      editBill(id as string, updateBill);
       navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
@@ -61,9 +68,9 @@ const EditBill = () => {
             id={"edit-bill-form"}
           />
 
-          <div className="flex sm:max-w-100">
+          <div className="flex justify-end gap-5 mx-9">
             <ButtonComponent
-              AdditionalClass="text-white bg-red-500 hover:bg-red-600 mr-5 mb-5 sm:mb-0"
+              AdditionalClass="text-white bg-red-500 hover:bg-red-600"
               onClick={() => {
                 navigate("/");
               }}
@@ -73,14 +80,29 @@ const EditBill = () => {
 
             <ButtonComponent
               AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
-              onClick={() => {}}
-              type="submit"
-              form="edit-bill-form"
+              onClick={() => {
+                setEditingConfirmationModalOpen(true);
+              }}
             >
               Confirm editing
             </ButtonComponent>
           </div>
         </Container>
+
+        {isModalOpen && (
+          <ConfirmationModal
+            onClose={() => setEditingConfirmationModalOpen(false)}
+            onConfirm={() => {
+              const form = document.getElementById(
+                "edit-bill-form",
+              ) as HTMLFormElement | null;
+              form?.requestSubmit();
+              setEditingConfirmationModalOpen(false);
+            }}
+          >
+            <p>confirm editing bill: {id}</p>
+          </ConfirmationModal>
+        )}
       </div>
     </>
   );

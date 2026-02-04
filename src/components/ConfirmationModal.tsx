@@ -4,7 +4,7 @@ type PopupProps = {
   onClose: () => void;
   onConfirm: () => void;
   children: React.ReactNode;
-};
+}
 
 function ConfirmationModal({ onClose, onConfirm, children }: PopupProps) {
   return (

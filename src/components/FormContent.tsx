@@ -26,14 +26,14 @@ const FormContent: React.FC<FormContentProps> = ({
 }) => {
   return (
     <>
-      <form onSubmit={handleOnSubmit} {...rest}>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <form onSubmit={handleOnSubmit} {...rest} className="mb-4 px-6">
+        <div className="grid grid-cols-1 gap-x-11 lg:grid-cols-2">
           <div
             key={isShopNameValid ? "valid" : "invalid"}
             className={`group ${!isShopNameValid ? "invalid" : ""}`}
           >
-            <label className="mr-1 group-[.invalid]:text-red-500">
-              Shop Name* {!isShopNameValid && " this field is required"}
+            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
+              Shop Name <span className="text-red-600">*</span>
             </label>
             <br />
             <input
@@ -48,11 +48,14 @@ const FormContent: React.FC<FormContentProps> = ({
               placeholder="Shop Name"
               defaultValue={shopName}
             ></input>
+            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
+              this field is required
+            </p>
           </div>
 
           <div className={`group ${!isDateValid ? "invalid" : ""}`}>
-            <label className="mr-1 group-[.invalid]:text-red-500">
-              Date* {!isDateValid && " this field is required"}
+            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
+              Purchase Date <span className="text-red-600">*</span>
             </label>
             <br />
             <input
@@ -67,11 +70,14 @@ const FormContent: React.FC<FormContentProps> = ({
               placeholder="Date"
               defaultValue={date}
             ></input>
+            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
+              this field is required
+            </p>
           </div>
 
           <div className={`group ${!isAmountValid ? "invalid" : ""}`}>
-            <label className="mr-1 group-[.invalid]:text-red-500">
-              Amount* {!isAmountValid && " this field is required"}
+            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
+              Amount <span className="text-red-600">*</span>
             </label>
             <br />
             <input
@@ -88,15 +94,18 @@ const FormContent: React.FC<FormContentProps> = ({
               placeholder="Amount"
               defaultValue={amount}
             ></input>
+            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
+              this field is required
+            </p>
           </div>
 
           <div className={`group ${!isCategoryValid ? "invalid" : ""}`}>
-            <label className="mr-1 group-[.invalid]:text-red-500">
-              Category* {!isCategoryValid && " this field is required"}
+            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
+              Category <span className="text-red-600">*</span>
             </label>
             <br />
             <select
-              className="w-full border rounded-xl pl-2
+              className="w-full border rounded-xl pl-2 py-1
                border-black
                group-[.invalid]:border-red-500
                focus:outline-none
@@ -115,16 +124,20 @@ const FormContent: React.FC<FormContentProps> = ({
                 </option>
               ))}
             </select>
+            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
+              this field is required
+            </p>
           </div>
 
           <div
             className={`row-span-2 group ${!isDescriptionValid ? "invalid" : ""}`}
           >
-            <label className="mr-1 group-[.invalid]:text-red-500">
-              Description* {!isDescriptionValid && " this field is required"}
+            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
+              Description <span className="text-red-600">*</span>
             </label>
             <br />
-            <textarea
+            <input
+              type="text"
               className="w-full border rounded-xl pl-2 pb-10
                border-black
                group-[.invalid]:border-red-500
@@ -134,19 +147,23 @@ const FormContent: React.FC<FormContentProps> = ({
               name="description"
               placeholder="Description"
               defaultValue={description}
-            ></textarea>
+            ></input>
+            <span className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
+              this field is required
+            </span>
           </div>
 
           <div className="row-span-2">
-            <label className="mr-1">Note (optional)</label>
+            <label className="pl-2 mr-1">Note</label>
             <br />
-            <textarea
+            <input
+              type="text"
               className="w-full border rounded-xl pl-2 pb-10"
               id="note"
               name="note"
               placeholder="Note"
               defaultValue={note}
-            ></textarea>
+            ></input>
           </div>
         </div>
       </form>
