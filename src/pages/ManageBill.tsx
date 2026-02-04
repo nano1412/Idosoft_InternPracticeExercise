@@ -20,16 +20,15 @@ const ManageBill = () => {
       <div>
         <Container>
           <h1 className="font-bold text-3xl">Manage Bill</h1>
-          <div className="text-center mt-5">
+          <div className="text-center">
             {bills.length === 0 ? (
-              <p>there is no bill here, please add a new one</p>
+              <div className="m-5 text-lg font-bold text-gray-400">
+                <p>there is no bill here, please add a new one</p>
+              </div>
             ) : (
-              <table className="min-w-full divide-y divide-black">
+              <table className=" mt-5 min-w-full divide-y divide-black">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden md:table-cell">
-                      Id
-                    </th>
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
                       Shop Name
                     </th>
@@ -56,10 +55,7 @@ const ManageBill = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-500">
                   {bills.map((bill) => (
-                    <tr key={bill.billId}>
-                      <td className="hidden md:table-cell w-20">
-                        {bill.billId}
-                      </td>
+                    <tr key={bill.billId} className="hover:bg-blue-50">
                       <td className="min-w-15">{bill.shopName}</td>
                       <td className="max-w-1 whitespace-normal wrap-break-word hidden md:table-cell">
                         {bill.description}
@@ -112,6 +108,7 @@ const ManageBill = () => {
               }}
             />
           </div>
+        </Container>
           {isModalOpen && (
             <ConfirmationModal
               onClose={() => setDeleteConfirmationModalOpen(false)}
@@ -120,7 +117,6 @@ const ManageBill = () => {
               <p>are you sure you want to delete bill {billIdToModify}</p>
             </ConfirmationModal>
           )}
-        </Container>
       </div>
     </>
   );
