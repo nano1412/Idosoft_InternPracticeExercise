@@ -10,7 +10,7 @@ export const BillCategory = {
   billId: string;
   shopName: string;
   description: string;
-  amount: string;
+  amount: number;
   date: string;
   category: string;
   note: string;

@@ -35,7 +35,7 @@ const AddBill = () => {
         billId: Date.now().toString(),
         shopName: formData.get("shopName") as string,
         description: formData.get("description") as string,
-        amount: formData.get("amount") as string,
+        amount: Number(formData.get("amount")),
         date: formData.get("date") as string,
         category: formData.get("category") as string,
         note: formData.get("note") as string,
