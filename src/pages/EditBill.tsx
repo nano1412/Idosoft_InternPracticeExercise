@@ -11,12 +11,15 @@ import {
 } from "@/components/FormValidation";
 import { useAsyncBillStore } from "@/store";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import LoadingModal from "@/components/LoadingModal";
+import Modal from "@/components/modal";
 
 const EditBill = () => {
   const updateBill = useAsyncBillStore((s) => s.updateBill);
   const asyncBills = useAsyncBillStore((s) => s.asyncBills);
   const isLoading = useAsyncBillStore((s) => s.isLoading);
   const error = useAsyncBillStore((s) => s.error);
+  const clearError = useAsyncBillStore((s) => s.clearError);
 
   const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
 
@@ -36,7 +39,9 @@ const EditBill = () => {
   };
   const editBillTarget = GetEditTargetBill(Number(id));
 
-  const handleEditBill = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleEditBill = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     console.log("editing bill");
@@ -90,6 +95,22 @@ const EditBill = () => {
             </ButtonComponent>
           </div>
         </Container>
+
+        {isLoading && (
+          <LoadingModal>
+            <p>updating table</p>
+          </LoadingModal>
+        )}
+
+        {error != undefined && (
+          <Modal
+            onClose={() => {
+              clearError();
+            }}
+          >
+            <p>{error}</p>
+          </Modal>
+        )}
 
         {isModalOpen && (
           <ConfirmationModal

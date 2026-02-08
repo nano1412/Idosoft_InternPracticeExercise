@@ -5,17 +5,20 @@ import Button from "@/components/ButtonComponent";
 import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { useAsyncBillStore } from "@/store";
+import LoadingModal from "@/components/LoadingModal";
+import Modal from "@/components/modal";
 
 const ManageBill = () => {
-const fetchBills = useAsyncBillStore((s) => s.fetchBills);
-const deleteBills = useAsyncBillStore((s) => s.deleteBills);
-const asyncBills = useAsyncBillStore((s) => s.asyncBills);
-const isLoading = useAsyncBillStore((s) => s.isLoading);
-const error = useAsyncBillStore((s) => s.error);
+  const fetchBills = useAsyncBillStore((s) => s.fetchBills);
+  const deleteBills = useAsyncBillStore((s) => s.deleteBills);
+  const asyncBills = useAsyncBillStore((s) => s.asyncBills);
+  const isLoading = useAsyncBillStore((s) => s.isLoading);
+  const error = useAsyncBillStore((s) => s.error);
+  const clearError = useAsyncBillStore((s) => s.clearError);
 
-useEffect(() => {
-  fetchBills();
-}, []);
+  useEffect(() => {
+    fetchBills();
+  }, []);
 
   const [isModalOpen, setDeleteConfirmationModalOpen] = useState(false);
   const [billIdToModify, setBillIdToModify] = useState(Number);
@@ -115,6 +118,23 @@ useEffect(() => {
             />
           </div>
         </Container>
+
+        {isLoading && (
+          <LoadingModal>
+            <p>fetching new data</p>
+          </LoadingModal>
+        )}
+
+        {error != undefined && (
+          <Modal
+            onClose={() => {
+              clearError();
+            }}
+          >
+            <p>{error}</p>
+          </Modal>
+        )}
+
         {isModalOpen && (
           <ConfirmationModal
             onClose={() => setDeleteConfirmationModalOpen(false)}

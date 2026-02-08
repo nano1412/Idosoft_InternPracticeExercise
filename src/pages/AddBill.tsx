@@ -12,12 +12,15 @@ import {
   type BillFormValidation,
 } from "@/components/FormValidation";
 import { useAsyncBillStore } from "@/store";
+import LoadingModal from "@/components/LoadingModal";
+import Modal from "@/components/modal";
 
 
 const AddBill = () => {
   const isLoading = useAsyncBillStore((s) => s.isLoading);
   const error = useAsyncBillStore((s) => s.error);
   const createBills = useAsyncBillStore((s) => s.createBills);
+  const clearError = useAsyncBillStore((s) => s.clearError);
   
   const navigate = useNavigate();
   const [errorField, setErrorField] = useState<BillFormValidation>({
@@ -79,6 +82,22 @@ const AddBill = () => {
           </ButtonComponent>
         </div>
       </Container>
+
+              {isLoading && (
+          <LoadingModal>
+            <p>adding new bill to table</p>
+          </LoadingModal>
+        )}
+
+        {error != undefined && (
+          <Modal
+            onClose={() => {
+              clearError();
+            }}
+          >
+            <p>{error}</p>
+          </Modal>
+        )}
     </div>
   );
 }

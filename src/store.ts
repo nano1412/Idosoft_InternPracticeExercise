@@ -15,6 +15,7 @@ type AsyncBillsStore = {
   
   isLoading: boolean;
   error?: string;
+  clearError: () => void;
   createBills: (bill: Bill) => void;
   fetchBills: () => Promise<void>;
   updateBill: (billID:number, bill:Bill) => void;
@@ -26,6 +27,7 @@ export const useAsyncBillStore = create<AsyncBillsStore>((set) => ({
   asyncBills: [],
   isLoading: false,
   error: undefined,
+  clearError: () => set({ error: undefined }),
 
   createBills: async (bill: Bill) => {
     set({ isLoading: true, error: undefined });
