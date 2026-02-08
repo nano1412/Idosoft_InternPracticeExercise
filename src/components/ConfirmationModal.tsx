@@ -6,7 +6,7 @@ type PopupProps = {
   children: React.ReactNode;
 }
 
-function ConfirmationModal({ onClose, onConfirm, children }: PopupProps) {
+const ConfirmationModal:React.FC<PopupProps> = ({ onClose, onConfirm, children }) => {
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black/50">
