@@ -8,6 +8,9 @@ import { useAsyncBillStore } from "@/store";
 import LoadingModal from "@/components/LoadingModal";
 import Modal from "@/components/modal";
 
+import EditIcon from '@/assets/edit-button-svgrepo-com.svg?react'
+import DeleteIcon from '@/assets/delete-svgrepo-com.svg?react'
+
 const ManageBill = () => {
   const fetchBills = useAsyncBillStore((s) => s.fetchBills);
   const deleteBills = useAsyncBillStore((s) => s.deleteBills);
@@ -35,7 +38,7 @@ const ManageBill = () => {
                 <p>there is no bill here, please add a new one</p>
               </div>
             ) : (
-              <table className=" mt-5 min-w-full divide-y divide-black">
+              <table className=" my-5 min-w-full divide-y divide-black">
                 <thead className="bg-gray-100">
                   <tr>
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
@@ -58,7 +61,7 @@ const ManageBill = () => {
                     </th>
 
                     <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
-                      edit
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -78,7 +81,7 @@ const ManageBill = () => {
 
                       <td className="">
                         <button
-                          className="hover:bg-blue-600 bg-blue-500 text-white px-1 m-1 rounded-lg shadow-md
+                          className="py-1 hover:bg-blue-600 bg-blue-500 text-white px-1 m-1 rounded-lg shadow-md
           active:scale-95
           transition
           ease-in-out
@@ -87,10 +90,10 @@ const ManageBill = () => {
                             navigate(`/edit/${bill.Id}`);
                           }}
                         >
-                          edit
+                          <EditIcon className="text-center w-6 h-6 text-white" />
                         </button>
                         <button
-                          className=" hover:bg-red-600 bg-red-500 text-white px-1 m-1 rounded-lg shadow-md
+                          className="py-1 hover:bg-red-600 bg-red-500 text-white px-1 m-1 rounded-lg shadow-md
           active:scale-95
           transition
           ease-in-out
@@ -100,7 +103,7 @@ const ManageBill = () => {
                             setBillIdToModify(Number(bill.Id));
                           }}
                         >
-                          delete
+                          <DeleteIcon className="w-6 h-6 text-white" />
                         </button>
                       </td>
                     </tr>
