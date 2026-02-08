@@ -9,12 +9,15 @@ import {
   isFormValid,
   type BillFormValidation,
 } from "@/components/FormValidation";
-import { useBillStore } from "@/store";
+import { useAsyncBillStore } from "@/store";
 import ConfirmationModal from "@/components/ConfirmationModal";
 
 const EditBill = () => {
-  const bills = useBillStore((state) => state.bills);
-  const editBill = useBillStore((state) => state.updateBill);
+  const updateBill = useAsyncBillStore((s) => s.updateBill);
+  const asyncBills = useAsyncBillStore((s) => s.asyncBills);
+  const isLoading = useAsyncBillStore((s) => s.isLoading);
+  const error = useAsyncBillStore((s) => s.error);
+
   const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -28,19 +31,18 @@ const EditBill = () => {
 
   const { id } = useParams();
 
-  const GetEditTargetBill = (id: string): Bill | undefined => {
-    return bills.find((bill) => bill.billId === id);
+  const GetEditTargetBill = (id: number): Bill | undefined => {
+    return asyncBills.find((bill) => bill.Id === id);
   };
-  const editBillTarget = GetEditTargetBill(id as string);
+  const editBillTarget = GetEditTargetBill(Number(id));
 
-  const handleEditBill = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleEditBill = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     console.log("editing bill");
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
-      const updateBill: Bill = {
-        billId: id as string,
+      const updateBilldata: Bill = {
         shopName: formData.get("shopName") as string,
         description: formData.get("description") as string,
         amount: Number(formData.get("amount")),
@@ -49,7 +51,7 @@ const EditBill = () => {
         note: formData.get("note") as string,
       };
 
-      editBill(id as string, updateBill);
+      await updateBill(Number(id), updateBilldata);
       navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));

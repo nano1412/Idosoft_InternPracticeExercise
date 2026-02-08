@@ -1,17 +1,24 @@
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/components/ButtonComponent";
 import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
-import { useBillStore } from "@/store";
+import { useAsyncBillStore } from "@/store";
 
 const ManageBill = () => {
-  const bills = useBillStore((state) => state.bills);
-  const removeBill = useBillStore((state) => state.deleteBill);
+const fetchBills = useAsyncBillStore((s) => s.fetchBills);
+const deleteBills = useAsyncBillStore((s) => s.deleteBills);
+const asyncBills = useAsyncBillStore((s) => s.asyncBills);
+const isLoading = useAsyncBillStore((s) => s.isLoading);
+const error = useAsyncBillStore((s) => s.error);
+
+useEffect(() => {
+  fetchBills();
+}, []);
 
   const [isModalOpen, setDeleteConfirmationModalOpen] = useState(false);
-  const [billIdToModify, setBillIdToModify] = useState("");
+  const [billIdToModify, setBillIdToModify] = useState(Number);
   const navigate = useNavigate();
 
   return (
@@ -20,7 +27,7 @@ const ManageBill = () => {
         <Container>
           <h1 className="font-bold text-3xl">Manage Bill</h1>
           <div className="text-center">
-            {bills.length === 0 ? (
+            {asyncBills.length === 0 ? (
               <div className="m-5 text-lg font-bold text-gray-400">
                 <p>there is no bill here, please add a new one</p>
               </div>
@@ -53,8 +60,8 @@ const ManageBill = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-500">
-                  {bills.map((bill) => (
-                    <tr key={bill.billId} className="hover:bg-blue-50">
+                  {asyncBills.map((bill) => (
+                    <tr key={bill.Id} className="hover:bg-blue-50">
                       <td className="min-w-15">{bill.shopName}</td>
                       <td className="max-w-1 whitespace-normal wrap-break-word hidden md:table-cell">
                         {bill.description}
@@ -74,7 +81,7 @@ const ManageBill = () => {
           ease-in-out
           cursor-pointer"
                           onClick={() => {
-                            navigate(`/edit/${bill.billId}`);
+                            navigate(`/edit/${bill.Id}`);
                           }}
                         >
                           edit
@@ -87,7 +94,7 @@ const ManageBill = () => {
           cursor-pointer"
                           onClick={() => {
                             setDeleteConfirmationModalOpen(true);
-                            setBillIdToModify(bill.billId);
+                            setBillIdToModify(Number(bill.Id));
                           }}
                         >
                           delete
@@ -112,7 +119,7 @@ const ManageBill = () => {
           <ConfirmationModal
             onClose={() => setDeleteConfirmationModalOpen(false)}
             onConfirm={() => {
-              removeBill(billIdToModify);
+              deleteBills(billIdToModify);
               setDeleteConfirmationModalOpen(false);
             }}
           >

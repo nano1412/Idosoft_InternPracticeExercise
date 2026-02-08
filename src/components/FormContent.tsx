@@ -9,7 +9,6 @@ type FormContentProps = Partial<Bill> &
   } & FormHTMLAttributes<HTMLFormElement>;
 
 const FormContent: React.FC<FormContentProps> = ({
-  billId,
   shopName,
   description,
   amount,
@@ -22,11 +21,12 @@ const FormContent: React.FC<FormContentProps> = ({
   isDateValid,
   isCategoryValid, //BillFormValidation
   handleOnSubmit,
-  ...rest
+  id
+
 }) => {
   return (
     <>
-      <form onSubmit={handleOnSubmit} {...rest} className="mb-4 px-6">
+      <form onSubmit={handleOnSubmit} id={id} className="mb-4 px-6">
         <div className="grid grid-cols-1 gap-x-11 lg:grid-cols-2">
           <div
             key={isShopNameValid ? "valid" : "invalid"}

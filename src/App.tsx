@@ -6,7 +6,7 @@ import ManageBill from "@/pages/ManageBill.tsx";
 import Header from "@/pages/Header.tsx";
 
 function App() {
-  console.log(import.meta.env.VITE_TEST_VALUE)
+
   return (
     <>
       <div className="bg-gray-50">

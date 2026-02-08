@@ -11,11 +11,13 @@ import {
   isFormValid,
   type BillFormValidation,
 } from "@/components/FormValidation";
-import { useBillStore } from "@/store";
+import { useAsyncBillStore } from "@/store";
 
 
 const AddBill = () => {
-  const addBill = useBillStore((state) => state.createBill)
+  const isLoading = useAsyncBillStore((s) => s.isLoading);
+  const error = useAsyncBillStore((s) => s.error);
+  const createBills = useAsyncBillStore((s) => s.createBills);
   
   const navigate = useNavigate();
   const [errorField, setErrorField] = useState<BillFormValidation>({
@@ -26,13 +28,12 @@ const AddBill = () => {
     isCategoryValid: true,
   });
 
-  const handleAddBill = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddBill = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const bill: Bill = {
-        billId: Date.now().toString(),
         shopName: formData.get("shopName") as string,
         description: formData.get("description") as string,
         amount: Number(formData.get("amount")),
@@ -41,7 +42,7 @@ const AddBill = () => {
         note: formData.get("note") as string,
       };
 
-      addBill(bill);
+      await createBills(bill);
       navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
