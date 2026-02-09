@@ -7,10 +7,10 @@ export const BillCategory = {
 }
 
   export type Bill = {
-  billId: string;
+  billId: number;
   shopName: string;
   description: string;
-  amount: string;
+  amount: number;
   date: string;
   category: string;
   note: string;

@@ -4,6 +4,7 @@ import AddBill from "@/pages/AddBill.tsx";
 import EditBill from "@/pages/EditBill.tsx";
 import ManageBill from "@/pages/ManageBill.tsx";
 import Header from "@/pages/Header.tsx";
+import { PATH } from "./components/path";
 
 function App() {
 
@@ -14,13 +15,13 @@ function App() {
           <Header />
           <div className="py-8 px-12">
             <Routes>
-              <Route path="/add" element={<AddBill/>} />
+              <Route path={PATH.ADD_PAGE} element={<AddBill/>} />
               <Route
-                path="/edit/:id"
+                path={`${PATH.EDIT_PAGE}/:id`}
                 element={<EditBill/>}
               />
               <Route
-                path="/"
+                path={PATH.MANAGE_PAGE}
                 element={<ManageBill/>}
               />
             </Routes>

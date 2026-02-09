@@ -1,3 +1,4 @@
+import { PATH } from "@/components/path";
 import { NavLink } from "react-router";
 
 const Header = () => {
@@ -13,11 +14,11 @@ const Header = () => {
       <div className="pb-2">Simple Bill Management System</div>
 
       <div className="flex">
-        <NavLink to="/" className={linkClasses}>
+        <NavLink to={PATH.MANAGE_PAGE} className={linkClasses}>
           Manage Bills
         </NavLink>
 
-        <NavLink to="/add" className={linkClasses}>
+        <NavLink to={PATH.ADD_PAGE} className={linkClasses}>
           Add Bill
         </NavLink>
       </div>

@@ -1,17 +1,31 @@
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/components/ButtonComponent";
 import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { useBillStore } from "@/store";
+import LoadingModal from "@/components/LoadingModal";
+import Modal from "@/components/modal";
+
+import EditIcon from "@/assets/pencil-edit-button.svg?react";
+import DeleteIcon from "@/assets/delete-189.svg?react";
+import { PATH } from "@/components/path";
 
 const ManageBill = () => {
-  const bills = useBillStore((state) => state.bills);
-  const removeBill = useBillStore((state) => state.deleteBill);
+  const fetchBills = useBillStore((s) => s.fetchBills);
+  const deleteBills = useBillStore((s) => s.deleteBills);
+  const bills = useBillStore((s) => s.asyncBills);
+  const isLoading = useBillStore((s) => s.isLoading);
+  const error = useBillStore((s) => s.error);
+  const clearError = useBillStore((s) => s.clearError);
+
+  useEffect(() => {
+    fetchBills();
+  }, []);
 
   const [isModalOpen, setDeleteConfirmationModalOpen] = useState(false);
-  const [billIdToModify, setBillIdToModify] = useState("");
+  const [billIdToModify, setBillIdToModify] = useState(Number);
   const navigate = useNavigate();
 
   return (
@@ -25,30 +39,30 @@ const ManageBill = () => {
                 <p>there is no bill here, please add a new one</p>
               </div>
             ) : (
-              <table className=" mt-5 min-w-full divide-y divide-black">
+              <table className=" my-5 min-w-full divide-y divide-black">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Shop Name
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden md:table-cell">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black hidden md:table-cell">
                       Description
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden sm:table-cell">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black hidden sm:table-cell">
                       Amount
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Purchase Date
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Category
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden lg:table-cell">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black hidden lg:table-cell">
                       Note
                     </th>
 
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
-                      edit
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -68,29 +82,29 @@ const ManageBill = () => {
 
                       <td className="">
                         <button
-                          className="hover:bg-blue-600 bg-blue-500 text-white px-1 m-1 rounded-lg shadow-md
+                          className="py-1 hover:bg-blue-600 bg-blue-500 text-white px-1 m-1 rounded-lg shadow-md
           active:scale-95
           transition
           ease-in-out
           cursor-pointer"
                           onClick={() => {
-                            navigate(`/edit/${bill.billId}`);
+                            navigate(`${PATH.EDIT_PAGE}/${bill.billId}`);
                           }}
                         >
-                          edit
+                          <EditIcon className="text-center w-4 h-4 text-white p-0.5" />
                         </button>
                         <button
-                          className=" hover:bg-red-600 bg-red-500 text-white px-1 m-1 rounded-lg shadow-md
+                          className="py-1 hover:bg-red-600 bg-red-500 text-white px-1 m-1 rounded-lg shadow-md
           active:scale-95
           transition
           ease-in-out
           cursor-pointer"
                           onClick={() => {
                             setDeleteConfirmationModalOpen(true);
-                            setBillIdToModify(bill.billId);
+                            setBillIdToModify(Number(bill.billId));
                           }}
                         >
-                          delete
+                          <DeleteIcon className="w-4 h-4 text-white" />
                         </button>
                       </td>
                     </tr>
@@ -108,17 +122,34 @@ const ManageBill = () => {
             />
           </div>
         </Container>
-        {isModalOpen && (
+
+          {isModalOpen && (
           <ConfirmationModal
             onClose={() => setDeleteConfirmationModalOpen(false)}
             onConfirm={() => {
-              removeBill(billIdToModify);
+              deleteBills(billIdToModify);
               setDeleteConfirmationModalOpen(false);
             }}
           >
             <p>are you sure you want to delete bill {billIdToModify}</p>
           </ConfirmationModal>
         )}
+
+        {isLoading && (
+          <LoadingModal loadingMessage="fetching new data"/>
+        )}
+
+        {!!error && (
+          <Modal
+            onClose={() => {
+              clearError();
+            }}
+          >
+            <p>{error}</p>
+          </Modal>
+        )}
+
+        
       </div>
     </>
   );

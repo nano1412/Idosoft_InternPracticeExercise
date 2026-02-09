@@ -1,12 +1,12 @@
 import ButtonComponent from "@/components/ButtonComponent";
 
-type PopupProps = {
+type ConfirmationModalProps = {
   onClose: () => void;
   onConfirm: () => void;
   children: React.ReactNode;
 }
 
-function ConfirmationModal({ onClose, onConfirm, children }: PopupProps) {
+const ConfirmationModal:React.FC<ConfirmationModalProps> = ({ onClose, onConfirm, children }) => {
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black/50">

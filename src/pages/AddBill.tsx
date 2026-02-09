@@ -12,10 +12,19 @@ import {
   type BillFormValidation,
 } from "@/components/FormValidation";
 import { useBillStore } from "@/store";
+import LoadingModal from "@/components/LoadingModal";
+import Modal from "@/components/modal";
+import ConfirmationModal from "@/components/ConfirmationModal";
+import { PATH } from "@/components/path";
 
 
 const AddBill = () => {
-  const addBill = useBillStore((state) => state.createBill)
+  const isLoading = useBillStore((s) => s.isLoading);
+  const error = useBillStore((s) => s.error);
+  const createBills = useBillStore((s) => s.createBills);
+  const clearError = useBillStore((s) => s.clearError);
+
+   const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
   
   const navigate = useNavigate();
   const [errorField, setErrorField] = useState<BillFormValidation>({
@@ -26,23 +35,23 @@ const AddBill = () => {
     isCategoryValid: true,
   });
 
-  const handleAddBill = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddBill = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const bill: Bill = {
-        billId: Date.now().toString(),
-        shopName: formData.get("shopName") as string,
-        description: formData.get("description") as string,
-        amount: formData.get("amount") as string,
-        date: formData.get("date") as string,
-        category: formData.get("category") as string,
-        note: formData.get("note") as string,
+        billId: Date.now(),
+        shopName: formData?.get("shopName")?.toString() || "",
+        description: formData?.get("description")?.toString() || "",
+        amount: Number(formData.get("amount")),
+        date: formData?.get("date")?.toString() || "",
+        category: formData?.get("category")?.toString() || "",
+        note: formData?.get("note")?.toString() || "",
       };
 
-      addBill(bill);
-      navigate("/");
+      await createBills(bill);
+      navigate(PATH.MANAGE_PAGE);
     } else {
       setErrorField(getMissingFieldsValidation(formData));
     }
@@ -58,26 +67,53 @@ const AddBill = () => {
           id={"add-bill-form"}
         />
 
-        <div className="flex justify-start gap-5 mx-9">
-          <ButtonComponent
-            AdditionalClass="text-white bg-red-500 hover:bg-red-600"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            cancel
-          </ButtonComponent>
-
+        <div className="flex justify-start gap-5 ">
           <ButtonComponent
             AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
-            onClick={() => {}}
-            type="submit"
-            form="add-bill-form"
+            onClick={() => {setEditingConfirmationModalOpen(true);}}
           >
             Add bill
           </ButtonComponent>
+          <ButtonComponent
+            AdditionalClass="text-white bg-red-500 hover:bg-red-600"
+            onClick={() => {
+              navigate(PATH.MANAGE_PAGE);
+            }}
+          >
+            Cancel
+          </ButtonComponent>
+
         </div>
       </Container>
+
+              {isLoading && (
+          <LoadingModal loadingMessage="adding new bill to table"/>
+        )}
+
+        {!!error && (
+          <Modal
+            onClose={() => {
+              clearError();
+            }}
+          >
+            <p>{error}</p>
+          </Modal>
+        )}
+
+        {isModalOpen && (
+          <ConfirmationModal
+            onClose={() => setEditingConfirmationModalOpen(false)}
+            onConfirm={() => {
+              const form = document.getElementById(
+                "add-bill-form",
+              ) as HTMLFormElement | null;
+              form?.requestSubmit();
+              setEditingConfirmationModalOpen(false);
+            }}
+          >
+            <p>confirm adding this bill</p>
+          </ConfirmationModal>
+        )}
     </div>
   );
 }

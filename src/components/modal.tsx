@@ -10,7 +10,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, children }: ModalProps) => {
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-        <div className="bg-white p-6 rounded shadow-lg text-left space-y-4">
+        <div className="flex flex-col items-center bg-white p-6 rounded shadow-lg space-y-4">
           <div className="text-red-600 font-semibold">{children}</div>
 
           <ButtonComponent

@@ -18,6 +18,7 @@ const ButtonComponent = ({
         rounded-lg
         font-medium
         shadow-md
+
         active:scale-95
         transition
         ease-in-out
@@ -25,7 +26,12 @@ const ButtonComponent = ({
       `}
       {...rest}
     >
-      {children}
+      <div className="w-25 text-center">
+      <span>
+        {children}
+      </span>
+
+      </div>
     </button>
   );
 };

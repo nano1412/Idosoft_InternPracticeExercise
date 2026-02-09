@@ -11,10 +11,17 @@ import {
 } from "@/components/FormValidation";
 import { useBillStore } from "@/store";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import LoadingModal from "@/components/LoadingModal";
+import Modal from "@/components/modal";
+import { PATH } from "@/components/path";
 
 const EditBill = () => {
-  const bills = useBillStore((state) => state.bills);
-  const editBill = useBillStore((state) => state.updateBill);
+  const updateBill = useBillStore((s) => s.updateBill);
+  const bills = useBillStore((s) => s.asyncBills);
+  const isLoading = useBillStore((s) => s.isLoading);
+  const error = useBillStore((s) => s.error);
+  const clearError = useBillStore((s) => s.clearError);
+
   const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -27,30 +34,27 @@ const EditBill = () => {
   });
 
   const { id } = useParams();
+  const editBillTarget = bills.find((bill) => bill.billId == Number(id));
 
-  const GetEditTargetBill = (id: string): Bill | undefined => {
-    return bills.find((bill) => bill.billId === id);
-  };
-  const editBillTarget = GetEditTargetBill(id as string);
-
-  const handleEditBill = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleEditBill = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
-    console.log("editing bill");
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
-      const updateBill: Bill = {
-        billId: id as string,
-        shopName: formData.get("shopName") as string,
-        description: formData.get("description") as string,
-        amount: formData.get("amount") as string,
-        date: formData.get("date") as string,
-        category: formData.get("category") as string,
-        note: formData.get("note") as string,
+      const updateBillData: Bill = {
+        billId: Number(id),
+        shopName: formData?.get("shopName")?.toString() || "",
+        description: formData?.get("description")?.toString() || "",
+        amount: Number(formData.get("amount")),
+        date: formData?.get("date")?.toString() || "",
+        category: formData?.get("category")?.toString() || "",
+        note: formData?.get("note")?.toString() || "",
       };
 
-      editBill(id as string, updateBill);
-      navigate("/");
+      await updateBill(Number(id), updateBillData);
+      navigate(PATH.MANAGE_PAGE);
     } else {
       setErrorField(getMissingFieldsValidation(formData));
     }
@@ -68,15 +72,7 @@ const EditBill = () => {
             id={"edit-bill-form"}
           />
 
-          <div className="flex justify-start gap-5 mx-9">
-            <ButtonComponent
-              AdditionalClass="text-white bg-red-500 hover:bg-red-600"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              cancel
-            </ButtonComponent>
+          <div className="flex justify-start gap-5 ">
 
             <ButtonComponent
               AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
@@ -84,10 +80,33 @@ const EditBill = () => {
                 setEditingConfirmationModalOpen(true);
               }}
             >
-              Confirm editing
+              Save
+            </ButtonComponent>
+            <ButtonComponent
+              AdditionalClass="text-white bg-red-500 hover:bg-red-600"
+              onClick={() => {
+                navigate(PATH.MANAGE_PAGE);
+              }}
+            >
+              Cancel
             </ButtonComponent>
           </div>
         </Container>
+
+        {isLoading && (
+          <LoadingModal loadingMessage="updating table"/>
+
+        )}
+
+        {!!error && (
+          <Modal
+            onClose={() => {
+              clearError();
+            }}
+          >
+            <p>{error}</p>
+          </Modal>
+        )}
 
         {isModalOpen && (
           <ConfirmationModal
@@ -100,7 +119,7 @@ const EditBill = () => {
               setEditingConfirmationModalOpen(false);
             }}
           >
-            <p>confirm editing bill: {id}</p>
+            <p>confirm editing this bill</p>
           </ConfirmationModal>
         )}
       </div>
