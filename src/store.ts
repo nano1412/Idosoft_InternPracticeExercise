@@ -69,6 +69,7 @@ export const useBillStore = create<BillsStore>((set) => ({
     
 
     try {
+
           await serviceDeleteBill(billID);
           const asyncBills = await serviceGetBills();
       set({ asyncBills, isLoading: false });
