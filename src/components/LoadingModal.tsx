@@ -1,11 +1,11 @@
 import type React from "react";
 
-type ContainerProps = {
-  text: string;
+type LoadingProps = {
+  loadingMessage: string;
 };
 
 
-const LoadingModal:React.FC<ContainerProps>  =({ text }) => {
+const LoadingModal:React.FC<LoadingProps>  =({ loadingMessage: text }) => {
     return (
         <>
             <div className="fixed inset-0 flex items-center justify-center bg-black/50">

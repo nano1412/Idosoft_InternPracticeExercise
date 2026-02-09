@@ -87,7 +87,7 @@ const AddBill = () => {
       </Container>
 
               {isLoading && (
-          <LoadingModal text="adding new bill to table"/>
+          <LoadingModal loadingMessage="adding new bill to table"/>
         )}
 
         {!!error && (

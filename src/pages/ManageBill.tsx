@@ -136,7 +136,7 @@ const ManageBill = () => {
         )}
 
         {isLoading && (
-          <LoadingModal text="fetching new data"/>
+          <LoadingModal loadingMessage="fetching new data"/>
         )}
 
         {!!error && (

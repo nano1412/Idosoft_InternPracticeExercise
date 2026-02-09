@@ -94,7 +94,7 @@ const EditBill = () => {
         </Container>
 
         {isLoading && (
-          <LoadingModal text="updating table"/>
+          <LoadingModal loadingMessage="updating table"/>
 
         )}
 
