@@ -14,6 +14,7 @@ import {
 import { useAsyncBillStore } from "@/store";
 import LoadingModal from "@/components/LoadingModal";
 import Modal from "@/components/modal";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 
 const AddBill = () => {
@@ -21,6 +22,8 @@ const AddBill = () => {
   const error = useAsyncBillStore((s) => s.error);
   const createBills = useAsyncBillStore((s) => s.createBills);
   const clearError = useAsyncBillStore((s) => s.clearError);
+
+   const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
   
   const navigate = useNavigate();
   const [errorField, setErrorField] = useState<BillFormValidation>({
@@ -65,9 +68,7 @@ const AddBill = () => {
         <div className="flex justify-start gap-5 ">
           <ButtonComponent
             AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
-            onClick={() => {}}
-            type="submit"
-            form="add-bill-form"
+            onClick={() => {setEditingConfirmationModalOpen(true);}}
           >
             Add bill
           </ButtonComponent>
@@ -97,6 +98,21 @@ const AddBill = () => {
           >
             <p>{error}</p>
           </Modal>
+        )}
+
+        {isModalOpen && (
+          <ConfirmationModal
+            onClose={() => setEditingConfirmationModalOpen(false)}
+            onConfirm={() => {
+              const form = document.getElementById(
+                "add-bill-form",
+              ) as HTMLFormElement | null;
+              form?.requestSubmit();
+              setEditingConfirmationModalOpen(false);
+            }}
+          >
+            <p>confirm adding this bill</p>
+          </ConfirmationModal>
         )}
     </div>
   );

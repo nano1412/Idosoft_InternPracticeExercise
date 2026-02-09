@@ -122,6 +122,18 @@ const ManageBill = () => {
           </div>
         </Container>
 
+          {isModalOpen && (
+          <ConfirmationModal
+            onClose={() => setDeleteConfirmationModalOpen(false)}
+            onConfirm={() => {
+              deleteBills(billIdToModify);
+              setDeleteConfirmationModalOpen(false);
+            }}
+          >
+            <p>are you sure you want to delete bill {billIdToModify}</p>
+          </ConfirmationModal>
+        )}
+
         {isLoading && (
           <LoadingModal>
             <p>fetching new data</p>
@@ -138,17 +150,7 @@ const ManageBill = () => {
           </Modal>
         )}
 
-        {isModalOpen && (
-          <ConfirmationModal
-            onClose={() => setDeleteConfirmationModalOpen(false)}
-            onConfirm={() => {
-              deleteBills(billIdToModify);
-              setDeleteConfirmationModalOpen(false);
-            }}
-          >
-            <p>are you sure you want to delete bill {billIdToModify}</p>
-          </ConfirmationModal>
-        )}
+        
       </div>
     </>
   );

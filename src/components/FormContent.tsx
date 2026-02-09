@@ -32,7 +32,6 @@ const FormContent: React.FC<FormContentProps> = ({
 >
   <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-    {/* Shop Name */}
     <div className={`group ${!isShopNameValid ? "invalid" : ""}`}>
       <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
         Shop Name <span className="text-red-500">*</span>
@@ -46,7 +45,7 @@ const FormContent: React.FC<FormContentProps> = ({
         "
         type="text"
         name="shopName"
-        placeholder="e.g. Starbucks"
+        placeholder="e.g. Shopee"
         defaultValue={shopName}
       />
       <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
@@ -54,7 +53,6 @@ const FormContent: React.FC<FormContentProps> = ({
       </p>
     </div>
 
-    {/* Date */}
     <div className={`group ${!isDateValid ? "invalid" : ""}`}>
       <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
         Purchase Date <span className="text-red-500">*</span>
@@ -74,7 +72,6 @@ const FormContent: React.FC<FormContentProps> = ({
       </p>
     </div>
 
-    {/* Amount */}
     <div className={`group ${!isAmountValid ? "invalid" : ""}`}>
       <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
         Amount <span className="text-red-500">*</span>
@@ -97,7 +94,6 @@ const FormContent: React.FC<FormContentProps> = ({
       </p>
     </div>
 
-    {/* Category */}
     <div className={`group ${!isCategoryValid ? "invalid" : ""}`}>
       <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
         Category <span className="text-red-500">*</span>
@@ -134,7 +130,6 @@ const FormContent: React.FC<FormContentProps> = ({
       </p>
     </div>
 
-    {/* Description */}
     <div className={`lg:col-span-1 lg:row-span-2 group ${!isDescriptionValid ? "invalid" : ""}`}>
       <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
         Description <span className="text-red-500">*</span>
@@ -148,7 +143,7 @@ const FormContent: React.FC<FormContentProps> = ({
         "
         rows={4}
         name="description"
-        placeholder="What was this purchase for?"
+        placeholder="Description"
         defaultValue={description}
       />
       <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
@@ -156,7 +151,6 @@ const FormContent: React.FC<FormContentProps> = ({
       </p>
     </div>
 
-    {/* Note */}
     <div className="lg:row-span-2">
       <label className="text-sm font-medium text-gray-700">
         Note

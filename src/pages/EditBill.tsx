@@ -123,7 +123,7 @@ const EditBill = () => {
               setEditingConfirmationModalOpen(false);
             }}
           >
-            <p>confirm editing bill: {id}</p>
+            <p>confirm editing this bill</p>
           </ConfirmationModal>
         )}
       </div>
