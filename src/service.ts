@@ -1,6 +1,25 @@
 import axios, { AxiosError } from "axios";
 import type { Bill } from "@/components/types";
 
+  export type BackEndBill = {
+  Id: string;
+  shopName: string;
+  description: string;
+  amount: number;
+  date: string;
+  category: string;
+  note: string;
+};
+
+export function backendBillToBill(backendBill:BackEndBill){
+  const { Id, ...rest } = backendBill;
+
+  return {
+    billId: Id,
+    ...rest,
+  };
+}
+
 export const service = axios.create({
   baseURL: `https://app.nocodb.com/api/v2/tables/${import.meta.env.VITE_NOCODB_TABLE_ID}`,
   headers: {
@@ -17,7 +36,7 @@ export async function serviceGetBills(): Promise<Bill[]> {
     },
   });
 
-  return res.data.list;
+  return res.data.list.map((bill:BackEndBill) => (backendBillToBill(bill)));
 }
 
 export async function serviceCreateBill(
@@ -33,12 +52,12 @@ export async function serviceCreateBill(
 
 export async function serviceUpdateBill(
   rowId: number,
-  data: Partial<Bill>
+  data: Partial<Omit<Bill, 'billId'>>
 ) {
   const res = await service.patch(
     `/records`,
     {
-      billId:rowId,
+      Id:rowId,
       ...data
     }
   );
