@@ -4,20 +4,21 @@ import { useEffect, useState } from "react";
 import Button from "@/components/ButtonComponent";
 import Container from "@/components/Container";
 import ConfirmationModal from "@/components/ConfirmationModal";
-import { useAsyncBillStore } from "@/store";
+import { useBillStore } from "@/store";
 import LoadingModal from "@/components/LoadingModal";
 import Modal from "@/components/modal";
 
 import EditIcon from "@/assets/pencil-edit-button.svg?react";
 import DeleteIcon from "@/assets/delete-189.svg?react";
+import { PATH } from "@/components/path";
 
 const ManageBill = () => {
-  const fetchBills = useAsyncBillStore((s) => s.fetchBills);
-  const deleteBills = useAsyncBillStore((s) => s.deleteBills);
-  const asyncBills = useAsyncBillStore((s) => s.asyncBills);
-  const isLoading = useAsyncBillStore((s) => s.isLoading);
-  const error = useAsyncBillStore((s) => s.error);
-  const clearError = useAsyncBillStore((s) => s.clearError);
+  const fetchBills = useBillStore((s) => s.fetchBills);
+  const deleteBills = useBillStore((s) => s.deleteBills);
+  const bills = useBillStore((s) => s.asyncBills);
+  const isLoading = useBillStore((s) => s.isLoading);
+  const error = useBillStore((s) => s.error);
+  const clearError = useBillStore((s) => s.clearError);
 
   useEffect(() => {
     fetchBills();
@@ -33,7 +34,7 @@ const ManageBill = () => {
         <Container>
           <h1 className="font-bold text-3xl">Manage Bill</h1>
           <div className="text-center">
-            {asyncBills.length === 0 ? (
+            {bills.length === 0 ? (
               <div className="m-5 text-lg font-bold text-gray-400">
                 <p>there is no bill here, please add a new one</p>
               </div>
@@ -66,7 +67,7 @@ const ManageBill = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-500">
-                  {asyncBills.map((bill) => (
+                  {bills.map((bill) => (
                     <tr key={bill.Id} className="hover:bg-blue-50">
                       <td className="min-w-15">{bill.shopName}</td>
                       <td className="max-w-1 whitespace-normal wrap-break-word hidden md:table-cell">
@@ -87,7 +88,7 @@ const ManageBill = () => {
           ease-in-out
           cursor-pointer"
                           onClick={() => {
-                            navigate(`/edit/${bill.Id}`);
+                            navigate(`${PATH.EDIT_PAGE}/${bill.Id}`);
                           }}
                         >
                           <EditIcon className="text-center w-4 h-4 text-white p-0.5" />
@@ -135,9 +136,7 @@ const ManageBill = () => {
         )}
 
         {isLoading && (
-          <LoadingModal>
-            <p>fetching new data</p>
-          </LoadingModal>
+          <LoadingModal text="fetching new data"/>
         )}
 
         {!!error && (

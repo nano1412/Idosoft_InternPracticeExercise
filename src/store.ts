@@ -1,16 +1,8 @@
 import { create } from "zustand";
 import type { Bill } from "@/components/types";
-import axios from "axios";
+import {serviceCreateBill, serviceGetBills, serviceUpdateBill, serviceDeleteBill} from "@/service"
 
-const nocodb = axios.create({
-  baseURL: `https://app.nocodb.com/api/v2/tables/${import.meta.env.VITE_NOCODB_TABLE_ID}`,
-  headers: {
-    "xc-token": import.meta.env.VITE_NOCODB_API!,
-    "Content-Type": "application/json",
-  },
-});
-
-type AsyncBillsStore = {
+type BillsStore = {
   asyncBills: Bill[]
   
   isLoading: boolean;
@@ -23,7 +15,7 @@ type AsyncBillsStore = {
 
 }
 
-export const useAsyncBillStore = create<AsyncBillsStore>((set) => ({
+export const useBillStore = create<BillsStore>((set) => ({
   asyncBills: [],
   isLoading: false,
   error: undefined,
@@ -33,7 +25,7 @@ export const useAsyncBillStore = create<AsyncBillsStore>((set) => ({
     set({ isLoading: true, error: undefined });
 
     try {
-      await nocodb.post(`/records`, bill);
+      await serviceCreateBill(bill);
       set({ isLoading: false });
     } catch (err: any) {
       set({
@@ -47,14 +39,9 @@ export const useAsyncBillStore = create<AsyncBillsStore>((set) => ({
     set({ isLoading: true, error: undefined });
 
     try {
-      const res = await nocodb.get(`/records`, {
-          params: {
-            limit: 1000,
-            offset: 0,
-          },
-        });
+      const asyncBills = await serviceGetBills();
 
-      set({ asyncBills: res.data.list, isLoading: false });
+      set({ asyncBills, isLoading: false });
     } catch (err: any) {
       set({
         error: err.message ?? "Failed to fetch users",
@@ -67,13 +54,7 @@ export const useAsyncBillStore = create<AsyncBillsStore>((set) => ({
     set({isLoading:true, error: undefined});
 
     try {
-      await nocodb.patch(
-          `/records`,
-          {
-            Id:billID,
-            ...bill
-          }
-        );
+      await serviceUpdateBill(billID,bill);
       set({isLoading: false });
     } catch (err: any) {
       set({
@@ -88,18 +69,9 @@ export const useAsyncBillStore = create<AsyncBillsStore>((set) => ({
     
 
     try {
-      await nocodb.delete(
-          `/records`,
-          {
-            data: { Id: billID },
-          });
-            const res = await nocodb.get(`/records`, {
-          params: {
-            limit: 1000,
-            offset: 0,
-          },
-        });
-      set({ asyncBills: res.data.list, isLoading: false });
+          await serviceDeleteBill(billID);
+          const asyncBills = await serviceGetBills();
+      set({ asyncBills, isLoading: false });
     } catch (err: any) {
       set({
         error: err.message ?? "Failed to fetch users",

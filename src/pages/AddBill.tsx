@@ -11,17 +11,18 @@ import {
   isFormValid,
   type BillFormValidation,
 } from "@/components/FormValidation";
-import { useAsyncBillStore } from "@/store";
+import { useBillStore } from "@/store";
 import LoadingModal from "@/components/LoadingModal";
 import Modal from "@/components/modal";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import { PATH } from "@/components/path";
 
 
 const AddBill = () => {
-  const isLoading = useAsyncBillStore((s) => s.isLoading);
-  const error = useAsyncBillStore((s) => s.error);
-  const createBills = useAsyncBillStore((s) => s.createBills);
-  const clearError = useAsyncBillStore((s) => s.clearError);
+  const isLoading = useBillStore((s) => s.isLoading);
+  const error = useBillStore((s) => s.error);
+  const createBills = useBillStore((s) => s.createBills);
+  const clearError = useBillStore((s) => s.clearError);
 
    const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
   
@@ -40,16 +41,16 @@ const AddBill = () => {
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const bill: Bill = {
-        shopName: formData.get("shopName") as string,
-        description: formData.get("description") as string,
+        shopName: formData?.get("shopName")?.toString() || "",
+        description: formData?.get("description")?.toString() || "",
         amount: Number(formData.get("amount")),
-        date: formData.get("date") as string,
-        category: formData.get("category") as string,
-        note: formData.get("note") as string,
+        date: formData?.get("date")?.toString() || "",
+        category: formData?.get("category")?.toString() || "",
+        note: formData?.get("note")?.toString() || "",
       };
 
       await createBills(bill);
-      navigate("/");
+      navigate(PATH.MANAGE_PAGE);
     } else {
       setErrorField(getMissingFieldsValidation(formData));
     }
@@ -75,7 +76,7 @@ const AddBill = () => {
           <ButtonComponent
             AdditionalClass="text-white bg-red-500 hover:bg-red-600"
             onClick={() => {
-              navigate("/");
+              navigate(PATH.MANAGE_PAGE);
             }}
           >
             Cancel
@@ -85,9 +86,7 @@ const AddBill = () => {
       </Container>
 
               {isLoading && (
-          <LoadingModal>
-            <p>adding new bill to table</p>
-          </LoadingModal>
+          <LoadingModal text="adding new bill to table"/>
         )}
 
         {!!error && (

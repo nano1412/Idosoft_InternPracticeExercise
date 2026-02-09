@@ -9,17 +9,18 @@ import {
   isFormValid,
   type BillFormValidation,
 } from "@/components/FormValidation";
-import { useAsyncBillStore } from "@/store";
+import { useBillStore } from "@/store";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import LoadingModal from "@/components/LoadingModal";
 import Modal from "@/components/modal";
+import { PATH } from "@/components/path";
 
 const EditBill = () => {
-  const updateBill = useAsyncBillStore((s) => s.updateBill);
-  const asyncBills = useAsyncBillStore((s) => s.asyncBills);
-  const isLoading = useAsyncBillStore((s) => s.isLoading);
-  const error = useAsyncBillStore((s) => s.error);
-  const clearError = useAsyncBillStore((s) => s.clearError);
+  const updateBill = useBillStore((s) => s.updateBill);
+  const bills = useBillStore((s) => s.asyncBills);
+  const isLoading = useBillStore((s) => s.isLoading);
+  const error = useBillStore((s) => s.error);
+  const clearError = useBillStore((s) => s.clearError);
 
   const [isModalOpen, setEditingConfirmationModalOpen] = useState(false);
 
@@ -33,31 +34,26 @@ const EditBill = () => {
   });
 
   const { id } = useParams();
-
-  const GetEditTargetBill = (id: number): Bill | undefined => {
-    return asyncBills.find((bill) => bill.Id === id);
-  };
-  const editBillTarget = GetEditTargetBill(Number(id));
+  const editBillTarget = bills.find((bill) => bill.Id == id);
 
   const handleEditBill = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
 
-    console.log("editing bill");
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const updateBillData: Bill = {
-        shopName: formData.get("shopName") as string,
-        description: formData.get("description") as string,
+        shopName: formData?.get("shopName")?.toString() || "",
+        description: formData?.get("description")?.toString() || "",
         amount: Number(formData.get("amount")),
-        date: formData.get("date") as string,
-        category: formData.get("category") as string,
-        note: formData.get("note") as string,
+        date: formData?.get("date")?.toString() || "",
+        category: formData?.get("category")?.toString() || "",
+        note: formData?.get("note")?.toString() || "",
       };
 
       await updateBill(Number(id), updateBillData);
-      navigate("/");
+      navigate(PATH.MANAGE_PAGE);
     } else {
       setErrorField(getMissingFieldsValidation(formData));
     }
@@ -88,7 +84,7 @@ const EditBill = () => {
             <ButtonComponent
               AdditionalClass="text-white bg-red-500 hover:bg-red-600"
               onClick={() => {
-                navigate("/");
+                navigate(PATH.MANAGE_PAGE);
               }}
             >
               Cancel
@@ -97,9 +93,8 @@ const EditBill = () => {
         </Container>
 
         {isLoading && (
-          <LoadingModal>
-            <p>updating table</p>
-          </LoadingModal>
+          <LoadingModal text="updating table"/>
+
         )}
 
         {!!error && (
