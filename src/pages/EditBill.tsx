@@ -34,7 +34,7 @@ const EditBill = () => {
   });
 
   const { id } = useParams();
-  const editBillTarget = bills.find((bill) => bill.billId == Number(id));
+  const editBillTarget = bills.find((bill) => bill.billId == id);
 
   const handleEditBill = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -44,7 +44,7 @@ const EditBill = () => {
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const updateBillData: Bill = {
-        billId: Number(id),
+        billId: id?.toString() || "",
         shopName: formData?.get("shopName")?.toString() || "",
         description: formData?.get("description")?.toString() || "",
         amount: Number(formData.get("amount")),
@@ -110,6 +110,8 @@ const EditBill = () => {
 
         {isModalOpen && (
           <ConfirmationModal
+          cancelButtonAdditionalClass = "bg-red-600 text-white"
+          confirmButtonAdditionalClass = "bg-blue-600 text-white"
             onClose={() => setEditingConfirmationModalOpen(false)}
             onConfirm={() => {
               const form = document.getElementById(

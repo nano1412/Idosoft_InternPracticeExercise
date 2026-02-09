@@ -41,7 +41,6 @@ const AddBill = () => {
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const bill: Bill = {
-        billId: Date.now(),
         shopName: formData?.get("shopName")?.toString() || "",
         description: formData?.get("description")?.toString() || "",
         amount: Number(formData.get("amount")),
@@ -102,6 +101,8 @@ const AddBill = () => {
 
         {isModalOpen && (
           <ConfirmationModal
+          cancelButtonAdditionalClass = "bg-red-600 text-white"
+          confirmButtonAdditionalClass = "bg-blue-600 text-white"
             onClose={() => setEditingConfirmationModalOpen(false)}
             onConfirm={() => {
               const form = document.getElementById(

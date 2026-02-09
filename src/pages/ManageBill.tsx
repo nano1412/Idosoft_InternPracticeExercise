@@ -125,6 +125,8 @@ const ManageBill = () => {
 
           {isModalOpen && (
           <ConfirmationModal
+          cancelButtonAdditionalClass = "bg-blue-600 text-white"
+          confirmButtonAdditionalClass = "bg-red-600 text-white"
             onClose={() => setDeleteConfirmationModalOpen(false)}
             onConfirm={() => {
               deleteBills(billIdToModify);
