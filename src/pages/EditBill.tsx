@@ -34,7 +34,7 @@ const EditBill = () => {
   });
 
   const { id } = useParams();
-  const editBillTarget = bills.find((bill) => bill.Id == id);
+  const editBillTarget = bills.find((bill) => bill.billId == Number(id));
 
   const handleEditBill = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -44,6 +44,7 @@ const EditBill = () => {
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const updateBillData: Bill = {
+        billId: Number(id),
         shopName: formData?.get("shopName")?.toString() || "",
         description: formData?.get("description")?.toString() || "",
         amount: Number(formData.get("amount")),

@@ -38,7 +38,7 @@ export async function serviceUpdateBill(
   const res = await service.patch(
     `/records`,
     {
-      Id:rowId,
+      billId:rowId,
       ...data
     }
   );

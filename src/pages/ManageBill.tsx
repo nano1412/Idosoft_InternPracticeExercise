@@ -68,7 +68,7 @@ const ManageBill = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-500">
                   {bills.map((bill) => (
-                    <tr key={bill.Id} className="hover:bg-blue-50">
+                    <tr key={bill.billId} className="hover:bg-blue-50">
                       <td className="min-w-15">{bill.shopName}</td>
                       <td className="max-w-1 whitespace-normal wrap-break-word hidden md:table-cell">
                         {bill.description}
@@ -88,7 +88,7 @@ const ManageBill = () => {
           ease-in-out
           cursor-pointer"
                           onClick={() => {
-                            navigate(`${PATH.EDIT_PAGE}/${bill.Id}`);
+                            navigate(`${PATH.EDIT_PAGE}/${bill.billId}`);
                           }}
                         >
                           <EditIcon className="text-center w-4 h-4 text-white p-0.5" />
@@ -101,7 +101,7 @@ const ManageBill = () => {
           cursor-pointer"
                           onClick={() => {
                             setDeleteConfirmationModalOpen(true);
-                            setBillIdToModify(Number(bill.Id));
+                            setBillIdToModify(Number(bill.billId));
                           }}
                         >
                           <DeleteIcon className="w-4 h-4 text-white" />

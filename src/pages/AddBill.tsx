@@ -41,6 +41,7 @@ const AddBill = () => {
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
       const bill: Bill = {
+        billId: Date.now(),
         shopName: formData?.get("shopName")?.toString() || "",
         description: formData?.get("description")?.toString() || "",
         amount: Number(formData.get("amount")),
