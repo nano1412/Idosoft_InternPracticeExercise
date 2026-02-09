@@ -8,8 +8,8 @@ import { useAsyncBillStore } from "@/store";
 import LoadingModal from "@/components/LoadingModal";
 import Modal from "@/components/modal";
 
-import EditIcon from '@/assets/edit-button-svgrepo-com.svg?react'
-import DeleteIcon from '@/assets/delete-svgrepo-com.svg?react'
+import EditIcon from "@/assets/pencil-edit-button.svg?react";
+import DeleteIcon from "@/assets/delete-189.svg?react";
 
 const ManageBill = () => {
   const fetchBills = useAsyncBillStore((s) => s.fetchBills);
@@ -41,26 +41,26 @@ const ManageBill = () => {
               <table className=" my-5 min-w-full divide-y divide-black">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Shop Name
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden md:table-cell">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black hidden md:table-cell">
                       Description
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden sm:table-cell">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black hidden sm:table-cell">
                       Amount
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Purchase Date
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Category
                     </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 hidden lg:table-cell">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black hidden lg:table-cell">
                       Note
                     </th>
 
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-3 text-center text-sm font-semibold text-black">
                       Action
                     </th>
                   </tr>
@@ -90,7 +90,7 @@ const ManageBill = () => {
                             navigate(`/edit/${bill.Id}`);
                           }}
                         >
-                          <EditIcon className="text-center w-6 h-6 text-white" />
+                          <EditIcon className="text-center w-4 h-4 text-white p-0.5" />
                         </button>
                         <button
                           className="py-1 hover:bg-red-600 bg-red-500 text-white px-1 m-1 rounded-lg shadow-md
@@ -103,7 +103,7 @@ const ManageBill = () => {
                             setBillIdToModify(Number(bill.Id));
                           }}
                         >
-                          <DeleteIcon className="w-6 h-6 text-white" />
+                          <DeleteIcon className="w-4 h-4 text-white" />
                         </button>
                       </td>
                     </tr>
@@ -128,7 +128,7 @@ const ManageBill = () => {
           </LoadingModal>
         )}
 
-        {error != undefined && (
+        {!!error && (
           <Modal
             onClose={() => {
               clearError();

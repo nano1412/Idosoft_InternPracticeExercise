@@ -62,16 +62,7 @@ const AddBill = () => {
           id={"add-bill-form"}
         />
 
-        <div className="flex justify-start gap-5 mx-9">
-          <ButtonComponent
-            AdditionalClass="text-white bg-red-500 hover:bg-red-600"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            cancel
-          </ButtonComponent>
-
+        <div className="flex justify-start gap-5 ">
           <ButtonComponent
             AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
             onClick={() => {}}
@@ -80,6 +71,15 @@ const AddBill = () => {
           >
             Add bill
           </ButtonComponent>
+          <ButtonComponent
+            AdditionalClass="text-white bg-red-500 hover:bg-red-600"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Cancel
+          </ButtonComponent>
+
         </div>
       </Container>
 
@@ -89,7 +89,7 @@ const AddBill = () => {
           </LoadingModal>
         )}
 
-        {error != undefined && (
+        {!!error && (
           <Modal
             onClose={() => {
               clearError();

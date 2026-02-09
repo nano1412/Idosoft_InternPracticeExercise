@@ -21,152 +21,162 @@ const FormContent: React.FC<FormContentProps> = ({
   isDateValid,
   isCategoryValid, //BillFormValidation
   handleOnSubmit,
-  id
-
+  id,
 }) => {
   return (
     <>
-      <form onSubmit={handleOnSubmit} id={id} className="mb-4 px-6">
-        <div className="grid grid-cols-1 gap-x-11 lg:grid-cols-2">
-          <div
-            key={isShopNameValid ? "valid" : "invalid"}
-            className={`group ${!isShopNameValid ? "invalid" : ""}`}
-          >
-            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
-              Shop Name <span className="text-red-600">*</span>
-            </label>
-            <br />
-            <input
-              className="w-full border rounded-xl pl-2
-               border-black
-               group-[.invalid]:border-red-500
-               focus:outline-none
-               group-[.invalid]:focus:ring-red-500"
-              type="text"
-              id="shopName"
-              name="shopName"
-              placeholder="Shop Name"
-              defaultValue={shopName}
-            ></input>
-            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
-              this field is required
-            </p>
-          </div>
+<form
+  onSubmit={handleOnSubmit}
+  id={id}
+  className="mt-4"
+>
+  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-          <div className={`group ${!isDateValid ? "invalid" : ""}`}>
-            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
-              Purchase Date <span className="text-red-600">*</span>
-            </label>
-            <br />
-            <input
-              className="w-full border rounded-xl pl-2
-               border-black
-               group-[.invalid]:border-red-500
-               focus:outline-none
-               group-[.invalid]:focus:ring-red-500"
-              type="date"
-              id="date"
-              name="date"
-              placeholder="Date"
-              defaultValue={date}
-            ></input>
-            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
-              this field is required
-            </p>
-          </div>
+    {/* Shop Name */}
+    <div className={`group ${!isShopNameValid ? "invalid" : ""}`}>
+      <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
+        Shop Name <span className="text-red-500">*</span>
+      </label>
+      <input
+        className="
+          mt-1 w-full rounded-lg border border-blue-200 bg-white px-3 py-2
+          text-gray-800 placeholder-gray-400
+          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none
+          group-[.invalid]:border-red-400 group-[.invalid]:focus:ring-red-200
+        "
+        type="text"
+        name="shopName"
+        placeholder="e.g. Starbucks"
+        defaultValue={shopName}
+      />
+      <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
+        This field is required
+      </p>
+    </div>
 
-          <div className={`group ${!isAmountValid ? "invalid" : ""}`}>
-            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
-              Amount <span className="text-red-600">*</span>
-            </label>
-            <br />
-            <input
-              className="w-full border rounded-xl pl-2
-               border-black
-               group-[.invalid]:border-red-500
-               focus:outline-none
-               group-[.invalid]:focus:ring-red-500"
-              type="number"
-              inputMode="decimal"
-              step="0.01"
-              id="amount"
-              name="amount"
-              placeholder="Amount"
-              defaultValue={amount}
-            ></input>
-            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
-              this field is required
-            </p>
-          </div>
+    {/* Date */}
+    <div className={`group ${!isDateValid ? "invalid" : ""}`}>
+      <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
+        Purchase Date <span className="text-red-500">*</span>
+      </label>
+      <input
+        className="
+          mt-1 w-full rounded-lg border border-blue-200 px-3 py-2
+          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none
+          group-[.invalid]:border-red-400 group-[.invalid]:focus:ring-red-200
+        "
+        type="date"
+        name="date"
+        defaultValue={date}
+      />
+      <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
+        This field is required
+      </p>
+    </div>
 
-          <div className={`group ${!isCategoryValid ? "invalid" : ""}`}>
-            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
-              Category <span className="text-red-600">*</span>
-            </label>
-            <br />
-            <select
-              className="w-full border rounded-xl pl-2 py-1
-               border-black
-               group-[.invalid]:border-red-500
-               focus:outline-none
-               group-[.invalid]:focus:ring-red-500"
-              id="category"
-              name="category"
-              defaultValue={category ?? ""}
-            >
-              <option value="" disabled>
-                Select category
-              </option>
+    {/* Amount */}
+    <div className={`group ${!isAmountValid ? "invalid" : ""}`}>
+      <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
+        Amount <span className="text-red-500">*</span>
+      </label>
+      <input
+        className=" appearance-none
+          mt-1 w-full rounded-lg border border-blue-200 px-3 py-2
+          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none
+          group-[.invalid]:border-red-400 group-[.invalid]:focus:ring-red-200
+        "
+        type="number"
+        min={1}
+        pattern="[0-9]*"
+        name="amount"
+        placeholder="0"
+        defaultValue={amount}
+      />
+      <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
+        This field is required
+      </p>
+    </div>
 
-              {Object.values(BillCategory).map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-            <p className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
-              this field is required
-            </p>
-          </div>
+    {/* Category */}
+    <div className={`group ${!isCategoryValid ? "invalid" : ""}`}>
+      <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
+        Category <span className="text-red-500">*</span>
+      </label>
 
-          <div
-            className={`row-span-2 group ${!isDescriptionValid ? "invalid" : ""}`}
-          >
-            <label className="pl-2 mr-1 group-[.invalid]:text-red-500">
-              Description <span className="text-red-600">*</span>
-            </label>
-            <br />
-            <input
-              type="text"
-              className="w-full border rounded-xl pl-2 pb-10
-               border-black
-               group-[.invalid]:border-red-500
-               focus:outline-none
-               group-[.invalid]:focus:ring-red-500"
-              id="description"
-              name="description"
-              placeholder="Description"
-              defaultValue={description}
-            ></input>
-            <span className="pl-2 invisible group-[.invalid]:visible  text-red-400 text-xs">
-              this field is required
-            </span>
-          </div>
+      <div className="relative mt-1">
+        <select
+          className="
+            w-full appearance-none rounded-lg border border-blue-200
+            bg-white px-3 py-2 pr-10
+            focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none
+            group-[.invalid]:border-red-400 group-[.invalid]:focus:ring-red-200
+          "
+          name="category"
+          defaultValue={category ?? ""}
+        >
+          <option value="" disabled>
+            Select category
+          </option>
+          {Object.values(BillCategory).map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
 
-          <div className="row-span-2">
-            <label className="pl-2 mr-1">Note</label>
-            <br />
-            <input
-              type="text"
-              className="w-full border rounded-xl pl-2 pb-10"
-              id="note"
-              name="note"
-              placeholder="Note"
-              defaultValue={note}
-            ></input>
-          </div>
-        </div>
-      </form>
+        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-blue-400">
+          ▾
+        </span>
+      </div>
+
+      <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
+        This field is required
+      </p>
+    </div>
+
+    {/* Description */}
+    <div className={`lg:col-span-1 lg:row-span-2 group ${!isDescriptionValid ? "invalid" : ""}`}>
+      <label className="text-sm font-medium text-gray-700 group-[.invalid]:text-red-500">
+        Description <span className="text-red-500">*</span>
+      </label>
+      <textarea
+        className="
+          mt-1 w-full resize-none rounded-lg border border-blue-200
+          bg-blue-50 px-3 py-2
+          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none
+          group-[.invalid]:border-red-400 group-[.invalid]:focus:ring-red-200
+        "
+        rows={4}
+        name="description"
+        placeholder="What was this purchase for?"
+        defaultValue={description}
+      />
+      <p className="mt-1 text-xs text-red-400 invisible group-[.invalid]:visible">
+        This field is required
+      </p>
+    </div>
+
+    {/* Note */}
+    <div className="lg:row-span-2">
+      <label className="text-sm font-medium text-gray-700">
+        Note
+      </label>
+      <textarea
+        className="
+          mt-1 w-full resize-none rounded-lg border border-blue-100
+          bg-gray-50 px-3 py-2
+          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none
+        "
+        rows={4}
+        name="note"
+        placeholder="Optional notes"
+        defaultValue={note}
+      />
+    </div>
+
+  </div>
+</form>
+
     </>
   );
 };

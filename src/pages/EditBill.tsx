@@ -47,7 +47,7 @@ const EditBill = () => {
     console.log("editing bill");
     const formData = new FormData(e.currentTarget);
     if (isFormValid(formData)) {
-      const updateBilldata: Bill = {
+      const updateBillData: Bill = {
         shopName: formData.get("shopName") as string,
         description: formData.get("description") as string,
         amount: Number(formData.get("amount")),
@@ -56,7 +56,7 @@ const EditBill = () => {
         note: formData.get("note") as string,
       };
 
-      await updateBill(Number(id), updateBilldata);
+      await updateBill(Number(id), updateBillData);
       navigate("/");
     } else {
       setErrorField(getMissingFieldsValidation(formData));
@@ -75,15 +75,7 @@ const EditBill = () => {
             id={"edit-bill-form"}
           />
 
-          <div className="flex justify-center gap-5 mx-9">
-            <ButtonComponent
-              AdditionalClass="text-white bg-red-500 hover:bg-red-600"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Cancel
-            </ButtonComponent>
+          <div className="flex justify-start gap-5 ">
 
             <ButtonComponent
               AdditionalClass="text-white bg-blue-500 hover:bg-blue-600"
@@ -92,6 +84,14 @@ const EditBill = () => {
               }}
             >
               Save
+            </ButtonComponent>
+            <ButtonComponent
+              AdditionalClass="text-white bg-red-500 hover:bg-red-600"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Cancel
             </ButtonComponent>
           </div>
         </Container>
@@ -102,7 +102,7 @@ const EditBill = () => {
           </LoadingModal>
         )}
 
-        {error != undefined && (
+        {!!error && (
           <Modal
             onClose={() => {
               clearError();
